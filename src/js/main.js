@@ -167,4 +167,3 @@ sceneEl.addEventListener("click", () => {
   }, clickConfig.lottieScrollDelay * 1000);
 });
 
-
