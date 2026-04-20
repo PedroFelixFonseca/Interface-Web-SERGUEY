@@ -49,6 +49,7 @@ video {
   display: flex;
   align-items: center;
   justify-content: right;
+  z-index: 999;
 }
 
 .menu ul {
