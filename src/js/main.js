@@ -4,15 +4,50 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── INITIAL ENTRANCE ─── */
-const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+const burger = document.querySelector('.burger');
+const menu = document.querySelector('.menu');
+
+let ouvert = false;
+
+const tl = gsap.timeline({ paused: true });
+
+tl.to(menu, {
+  right: 0,
+  duration: 0.5,
+  ease: "power3.inOut"
+});
+
+tl.to(".burger span:nth-child(1)", {
+  y: 9,
+  rotate: 45,
+  duration: 0.3
+}, 0);
+
+tl.to(".burger span:nth-child(2)", {
+  opacity: 0,
+  duration: 0.3
+}, 0);
+
+tl.to(".burger span:nth-child(3)", {
+  y: -9,
+  rotate: -45,
+  duration: 0.3
+}, 0);
+
+burger.addEventListener('click', () => {
+  ouvert = !ouvert;
+  ouvert ? tl.play() : tl.reverse();
+});
+
+
+const tlEntrance = gsap.timeline({ defaults: { ease: 'power3.out' } });
  
 gsap.set('#title-sayat',      { opacity: 0, y: 30 });
 gsap.set('#byline',           { opacity: 0, y: 12 });
 gsap.set('#pomegranate-wrap', { opacity: 0, scale: 0.85 });
 gsap.set('#cta',              { opacity: 0 });
  
-tl.to('#title-sayat',      { opacity: 1, y: 0, duration: 1.4 }, 0.3)
+tlEntrance.to('#title-sayat',      { opacity: 1, y: 0, duration: 1.4 }, 0.3)
   .to('#byline',           { opacity: 1, y: 0, duration: 1.1 }, 0.9)
   .to('#pomegranate-wrap', { opacity: 1, scale: 1, duration: 1.6, ease: 'expo.out' }, 0.6)
   .to('#cta',              { opacity: 0.75, duration: 1.2, ease: 'power2.inOut' }, 1.4);
@@ -22,7 +57,7 @@ const clickConfig = {
   textFade: 0.7,
   textMoveY: -20,
   pomegranateMove: 1.3,
-  pomegranateFade: 0.4,
+  pomegranateFade: 0.8,
   revealDelay: 1.0,
   lottieScrollDelay: 2.8
 };
@@ -93,3 +128,5 @@ sceneEl.addEventListener('click', () => {
     }
   }, clickConfig.lottieScrollDelay * 1000);
 });
+
+
