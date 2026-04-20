@@ -92,7 +92,7 @@ video {
   width: min(90vw, 900px);
   max-width: 100%;
 }
- 
+
 #title-sayat {
   font-family: serif;
   font-weight: 900;
@@ -103,13 +103,13 @@ video {
   text-transform: uppercase;
   user-select: none;
 }
- 
+
 #byline {
   display: flex;
   align-items: baseline;
   gap: 0.8em;
   margin-top: 1.2em;
-  font-family: 'Cormorant SC', serif;
+  font-family: "Cormorant SC", serif;
   font-weight: 300;
   font-size: clamp(9px, 1vw, 14px);
   letter-spacing: 0.22em;
@@ -117,13 +117,13 @@ video {
   color: var(--white);
   user-select: none;
 }
- 
+
 #byline .director {
   font-weight: 500;
   font-size: clamp(10px, 1.1vw, 15px);
   letter-spacing: 0.28em;
 }
- 
+
 /* ─── POMEGRANATE ─── */
 #pomegranate-wrap {
   position: relative;
@@ -136,7 +136,7 @@ video {
   z-index: 10;
   will-change: transform;
 }
- 
+
 #pomegranate {
   width: 100%;
   height: auto;
@@ -146,20 +146,25 @@ video {
   pointer-events: none;
   /* PNG with transparency works best here */
 }
- 
- /* ─── CLICK TO START ─── */
+
+/* ─── CLICK TO START ─── */
 
 #cta {
   font-family: serif;
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color : white;
+  color: white;
   animation: pulse 2.8s ease-in-out infinite;
 }
 @keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* ─── REVEAL LAYER ─── */
@@ -175,7 +180,7 @@ video {
 }
 
 #title-pomegranates {
-  font-family:  serif;
+  font-family: serif;
   font-weight: 400;
   font-size: clamp(28px, 4.5vw, 68px);
   color: white;
@@ -186,16 +191,21 @@ video {
   max-width: 80vw;
   opacity: 0;
 }
- 
- 
-
 
 /* lottie-player */
 
+/* animation scroll mains */
 .lottie-player {
   width: 100vw;
   height: 100vh;
   background-color: black;
+  position: sticky;
+  top: 0;
+}
+
+.lottie-wrapper {
+  height: 400vh;
+  position: relative;
 }
 
 /* animation scroll mains */
