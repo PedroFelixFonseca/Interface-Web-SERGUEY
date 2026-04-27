@@ -1,83 +1,84 @@
 import { gsap } from "gsap";
-import lottie from "lottie-web";
-import animationData from "../../static/data.json";
+const totalFrames = 105;
+const canvas = document.querySelector(".lottie-player");
+const ctx = canvas.getContext("2d");
+const container = document.querySelector(".lottie-wrapper");
 
-// ─── LOTTIE SCROLL ───
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".lottie-wrapper");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-const burger = document.querySelector('.burger');
-const menu = document.querySelector('.menu');
-
-let ouvert = false;
-
-const tl = gsap.timeline({ paused: true });
-
-tl.to(menu, {
-  right: 0,
-  duration: 0.5,
-  ease: "power3.inOut"
+const frames = Array.from({ length: totalFrames }, (_, i) => {
+  const img = new Image();
+  img.src = `/images/seq_0_${i}.jpg`;
+  return img;
 });
 
-tl.to(".burger span:nth-child(1)", {
-  y: 9,
-  rotate: 45,
-  duration: 0.3
-}, 0);
+function drawFrame(index) {
+  const img = frames[index];
+  if (!img || !img.complete) return;
+  const scale = Math.max(canvas.width / 1920, canvas.height / 1080);
+  const w = 1400 * scale;
+  const h = 1400 * scale;
+  const x = (canvas.width - w) / 2;
+  const y = (canvas.height - h) / 2;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, x, y, w, h);
+}
 
-tl.to(".burger span:nth-child(2)", {
-  opacity: 0,
-  duration: 0.3
-}, 0);
+let currentFrame = 0;
+let phase = 0; // 0=avant 1er scroll, 1=playing 0->50, 2=attente, 3=playing 50->104, 4=fin, 5=playing 104->50, 6=playing 50->0
+let isPlaying = false;
+let lastScrollY = window.scrollY;
 
-tl.to(".burger span:nth-child(3)", {
-  y: -9,
-  rotate: -45,
-  duration: 0.3
-}, 0);
+function playTo(target, onComplete) {
+  if (isPlaying) return;
+  isPlaying = true;
+  const direction = target > currentFrame ? 1 : -1;
 
-burger.addEventListener('click', () => {
-  ouvert = !ouvert;
-  ouvert ? tl.play() : tl.reverse();
+  function step() {
+    if (currentFrame === target) {
+      isPlaying = false;
+      if (onComplete) onComplete();
+      return;
+    }
+    currentFrame += direction;
+    drawFrame(currentFrame);
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  const scrollingDown = scrollY > lastScrollY;
+  lastScrollY = scrollY;
+
+  if (scrollingDown) {
+    if (phase === 0) {
+      phase = 1;
+      playTo(50, () => {
+        phase = 2;
+      });
+    } else if (phase === 2) {
+      phase = 3;
+      playTo(104, () => {
+        phase = 4;
+      });
+    }
+  } else {
+    if (phase === 4) {
+      phase = 5;
+      playTo(50, () => {
+        phase = 6;
+      });
+    } else if (phase === 6) {
+      phase = 0;
+      playTo(0, () => {});
+    }
+  }
 });
 
-
-const tlEntrance = gsap.timeline({ defaults: { ease: 'power3.out' } });
- 
-gsap.set('#title-sayat',      { opacity: 0, y: 30 });
-gsap.set('#byline',           { opacity: 0, y: 12 });
-gsap.set('#pomegranate-wrap', { opacity: 0, scale: 0.85 });
-gsap.set('#cta',              { opacity: 0 });
- 
-tlEntrance.to('#title-sayat',      { opacity: 1, y: 0, duration: 1.4 }, 0.3)
-  .to('#byline',           { opacity: 1, y: 0, duration: 1.1 }, 0.9)
-  .to('#pomegranate-wrap', { opacity: 1, scale: 1, duration: 1.6, ease: 'expo.out' }, 0.6)
-  .to('#cta',              { opacity: 0.75, duration: 1.2, ease: 'power2.inOut' }, 1.4);
- 
-/* ─── CLICK HANDLER ─── */
-  const animation = lottie.loadAnimation({
-    container: document.querySelector(".lottie-player"),
-    renderer: "canvas",
-    loop: false,
-    autoplay: false,
-    animationData: animationData,
-  });
-
-  animation.addEventListener("DOMLoaded", () => {
-    const totalFrames = animation.totalFrames;
-
-    window.addEventListener("scroll", () => {
-      const rect = container.getBoundingClientRect();
-      const sectionHeight = container.offsetHeight;
-      const progress = Math.max(
-        0,
-        Math.min(1, -rect.top / (sectionHeight - window.innerHeight)),
-      );
-      const frame = Math.round(progress * (totalFrames - 1));
-      animation.goToAndStop(frame, true);
-    });
-  });
-});
+frames[0].onload = () => drawFrame(0);
 
 // ─── INITIAL ENTRANCE ───
 const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -166,4 +167,3 @@ sceneEl.addEventListener("click", () => {
       wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
   }, clickConfig.lottieScrollDelay * 1000);
 });
-
