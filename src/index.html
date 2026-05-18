@@ -7,87 +7,80 @@
     <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    
-
-     <!-- Burger Menu -->
+    <!-- Burger Menu -->
     <button class="burger">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
-  <nav class="menu">
-  <ul>
-    <li><a href="#">Accueil</a></li>
-    <li><a href="#">À propos</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-  </nav>
-  
-  <div id="scene">
-    <!-- INTRO -->
-    <div id="intro">
-      <div id="title-sayat">Sayat<br />Nova</div>
-      <div id="byline">
-        <span>A film by</span>
-        <span class="director">Serguey Parajanov</span>
+    <nav class="menu">
+      <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div id="scene">
+      <!-- INTRO -->
+      <div id="intro">
+        <div id="title-sayat">Sayat<br />Nova</div>
+        <div id="byline">
+          <span>A film by</span>
+          <span class="director">Serguey Parajanov</span>
+        </div>
+      </div>
+
+      <!-- POMEGRANATE PNG -->
+      <div id="pomegranate-wrap">
+        <img
+          id="pomegranate"
+          src="img/hands-head-background.png"
+          alt="pomegranate"
+        />
+      </div>
+
+      <!-- CTA -->
+      <div id="cta">Click to start</div>
+
+      <!-- REVEAL -->
+      <div id="reveal">
+        <div id="title-pomegranates">The Color of<br />Pomegranates</div>
       </div>
     </div>
-    
-    <!-- POMEGRANATE PNG -->
-    <div id="pomegranate-wrap">
-      <img
-      id="pomegranate" src="img/hands-head-background.png" alt="pomegranate" />
-    </div>
-    
-    <!-- CTA -->
-    <div id="cta">Click to start</div>
-    
-    <!-- REVEAL -->
-    <div id="reveal">
-      <div id="title-pomegranates">The Color of<br />Pomegranates</div>
-    </div>
-  </div>
 
-
-  
     <nav id="progress-bar" aria-label="Progression de la page">
       <div class="pb-track">
-      <div class="pb-fill" id="pb-fill"></div>
+        <div class="pb-fill" id="pb-fill"></div>
       </div>
       <div class="pb-steps" id="pb-steps"></div>
     </nav>
 
-  <main id="main-content">
-    
-    <section class="section" id="section-1">
-      
-    </section>
-    <div class="lottie-wrapper">
-    <canvas class="lottie-player"></canvas></div>
-    
-    <section class="section" id="section-2">
-      
-      <!-- animation scroll mains -->
-    </section>
- 
-    <section class="section" id="section-3">
-      
-    </section>
- 
-    <section class="section" id="section-4">
-      <!-- Ton contenu ici -->
-    </section>
- 
-    <section class="section" id="section-5">
-      <!-- Ton contenu ici -->
-    </section>
- 
-  </main>
+    <main id="main-content">
+      <section class="section" id="section-1">
+        <div class="lottie-wrapper">
+          <canvas class="lottie-player"></canvas>
+        </div>
+      </section>
 
+      <section class="section" id="section-2">
+        <!-- animation scroll mains -->
+      </section>
 
-  <!-- FOOTER -->
-  <include src="./components/footer.html"></include>
+      <section class="section" id="section-3"></section>
+
+      <section class="section" id="section-4">
+        <!-- Ton contenu ici -->
+      </section>
+
+      <section class="section" id="section-5">
+        <!-- Ton contenu ici -->
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <include src="./components/footer.html"></include>
 
     <script src="js/main.js" type="module"></script>
   </body>

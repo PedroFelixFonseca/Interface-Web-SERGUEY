@@ -9,15 +9,15 @@
   --black: #171414;
   --dark-green: #3c3e3a;
   --light-green: #d7f2cc;
-  --bar-width:      88px;       /* largeur de la barre latérale      */
-  --bar-bg:         #f5f2ec;    /* fond de la barre                  */
-  --track-color:    #ddd8ce;    /* couleur du rail (inactif)         */
-  --fill-color:     #2a2318;    /* couleur du remplissage actif      */
-  --dot-size:       52px;       /* taille des cercles d'étapes       */
-  --dot-img-size:   32px;       /* taille du PNG dans le cercle      */
-  --label-color:    #8a8070;    /* couleur du texte de label         */
-  --label-active:   #2a2318;    /* couleur du label actif            */
-  --font-body:      'DM Sans', sans-serif;
+  --bar-width: 88px; /* largeur de la barre latérale      */
+  --bar-bg: #f5f2ec; /* fond de la barre                  */
+  --track-color: #ddd8ce; /* couleur du rail (inactif)         */
+  --fill-color: #2a2318; /* couleur du remplissage actif      */
+  --dot-size: 52px; /* taille des cercles d'étapes       */
+  --dot-img-size: 32px; /* taille du PNG dans le cercle      */
+  --label-color: #8a8070; /* couleur du texte de label         */
+  --label-active: #2a2318; /* couleur du label actif            */
+  --font-body: "DM Sans", sans-serif;
 }
 
 a {
@@ -30,7 +30,7 @@ video {
   display: block;
 }
 
-.about{ 
+.about {
   position: fixed;
   top: 20px;
   left: 20px;
@@ -39,8 +39,6 @@ video {
   background: none;
   border: none;
 }
-
-
 
 .burger {
   position: fixed;
@@ -178,7 +176,7 @@ video {
 /* ─── CLICK TO START ─── */
 
 #cta {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
@@ -230,16 +228,15 @@ video {
 }
 
 .lottie-wrapper {
-  height: 400vh;
+  height: 100vh;
   position: relative;
 }
 
 /* animation scroll mains */
 
-
 /* FOOTER */
 
-footer{
+footer {
   display: flex;
   height: 50vh;
   width: 100%;
@@ -252,7 +249,7 @@ footer{
   background-color: var(--dark-green);
   color: var(--light-green);
 }
-.footer-tittle{
+.footer-tittle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -261,7 +258,7 @@ footer{
   color: var(--light-green);
 }
 
-.footer-tittle h2{
+.footer-tittle h2 {
   text-align: center;
   font-family: Serif;
   font-size: 2em;
@@ -270,7 +267,7 @@ footer{
   line-height: normal;
 }
 
-.footer-tittle h1{
+.footer-tittle h1 {
   text-align: center;
   font-family: Serif;
   font-size: 8rem;
@@ -281,7 +278,7 @@ footer{
   text-transform: uppercase;
 }
 
-footer nav ul{
+footer nav ul {
   display: flex;
   width: 280px;
   flex-direction: column;
@@ -291,16 +288,16 @@ footer nav ul{
   color: var(--light-green);
 }
 
-footer nav ul li{
-text-align: right;
-font-family: "Instrument Serif";
-font-size: 500%;
-font-style: normal;
-font-weight: 400;
-line-height: 85.67%; /* 108.577px */
-letter-spacing: -2.535px;
-text-transform: uppercase;
-list-style: none;
+footer nav ul li {
+  text-align: right;
+  font-family: "Instrument Serif";
+  font-size: 500%;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 85.67%; /* 108.577px */
+  letter-spacing: -2.535px;
+  text-transform: uppercase;
+  list-style: none;
 }
 
 /* ─── PROGRESS BAR SIDEBAR ──────────────────────────────────── */
@@ -325,27 +322,27 @@ list-style: none;
   opacity: 1;
   pointer-events: auto;
 }
- 
+
 .pb-track {
   position: absolute;
-  left: 50%; 
+  left: 50%;
   transform: translateX(-50%);
   width: 2px;
   top: 0;
   bottom: 0;
   background: transparent;
 }
- 
+
 .pb-fill {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 0%;
-  background:transparent;
+  background: transparent;
   transform-origin: top center;
 }
- 
+
 .pb-steps {
   position: relative;
   display: flex;
@@ -354,7 +351,7 @@ list-style: none;
   width: 100%;
   z-index: 2;
 }
- 
+
 .pb-step {
   display: flex;
   flex-direction: column;
@@ -367,7 +364,7 @@ list-style: none;
   padding: 1rem 0;
   cursor: pointer;
 }
- 
+
 .pb-dot {
   width: var(--dot-size);
   height: var(--dot-size);
@@ -376,11 +373,13 @@ list-style: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.35s ease, transform 0.35s ease;
+  transition:
+    background 0.35s ease,
+    transform 0.35s ease;
   position: relative;
   z-index: 3;
 }
- 
+
 /* Image PNG dans le cercle */
 .pb-dot img {
   width: var(--dot-img-size);
@@ -389,7 +388,7 @@ list-style: none;
   opacity: 0.35;
   transition: opacity 0.35s ease;
 }
- 
+
 /* Fallback numérique si pas d'image */
 .pb-dot .pb-fallback {
   font-size: 16px;
@@ -397,7 +396,7 @@ list-style: none;
   opacity: 0.35;
   transition: opacity 0.35s ease;
 }
- 
+
 /* Label sous le cercle */
 .pb-label {
   font-size: 9px;
@@ -410,15 +409,14 @@ list-style: none;
   max-width: 70px;
   transition: color 0.35s ease;
 }
- 
- 
+
 /* ─── ÉTAT ACTIF ─────────────────────────────────────────────── */
 .pb-step.is-active .pb-dot {
   border-color: var(--fill-color);
   background: var(--fill-color);
   transform: scale(1.1);
 }
- 
+
 .pb-step.is-active .pb-dot img,
 .pb-step.is-active .pb-dot .pb-fallback {
   opacity: 1;
@@ -426,29 +424,27 @@ list-style: none;
      Supprime cette ligne si tes icônes sont colorées. */
   filter: invert(1) brightness(10);
 }
- 
+
 .pb-step.is-active .pb-label {
   color: var(--label-active);
   font-weight: 600;
 }
- 
- 
+
 /* ─── ÉTAT PASSÉ ─────────────────────────────────────────────── */
 .pb-step.is-past .pb-dot {
   border-color: var(--fill-color);
   background: #fff;
 }
- 
+
 .pb-step.is-past .pb-dot img,
 .pb-step.is-past .pb-dot .pb-fallback {
   opacity: 0.8;
 }
- 
- 
+
 /* ─── CONTENU PRINCIPAL ─────────────────────────────────────── */
 /* Laisse de la place pour la barre latérale à droite */
-main { 
-  margin-left: 0; 
+main {
+  margin-left: 0;
   margin-top: 0;
 }
 /* Chaque section doit occuper au moins la hauteur de l'écran
