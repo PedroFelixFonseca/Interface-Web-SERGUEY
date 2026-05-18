@@ -338,11 +338,11 @@ gsap.registerPlugin(ScrollTrigger);
  
 const STEPS = [
 
-  { id: "section-1", label: "The poet's love", img: "#" },
+  { id: "section-1", label: "The poet's youth", img: "#" },
 
-  { id: "section-2", label: "Analyse", img: "#" },
+  { id: "section-2", label: "The poet's love", img: "#" },
 
-  { id: "section-3", label: "Création", img: "#" },
+  { id: "section-3", label: "The poet at the princes court", img: "#" },
 
   { id: "section-4", label: "Validation", img: "#" },
 
