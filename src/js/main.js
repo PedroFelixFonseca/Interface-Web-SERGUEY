@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
  
   tlBurger.to(".burger span:nth-child(1)", {
-
     y: 9,
 
     rotate: 45,
@@ -201,136 +200,77 @@ document.addEventListener("DOMContentLoaded", () => {
   });
  
   // ─── CANVAS ANIMATION ───
-
-  const totalFrames = 105;
-
-  let currentFrame = 0;
-
-  let phase = 0;
-
-  let isPlaying = false;
-
-  let lastScrollY = window.scrollY;
+const totalFrames = 105;
+let currentFrame = 0;
+let phase = 0;
+let isPlaying = false;
+let lastScrollY = window.scrollY;
  
-  const frames = Array.from({ length: totalFrames }, (_, i) => {
-
-    const img = new Image();
-
-    img.src = `/images/seq_0_${i}.jpg`;
-
-    return img;
-
-  });
- 
-  const canvas = document.querySelector(".lottie-player");
-
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = window.innerWidth;
-
-  canvas.height = window.innerHeight;
- 
-  function drawFrame(index) {
-
-    const img = frames[index];
-
-    if (!img || !img.complete) return;
-
-    const scale = Math.max(canvas.width / 1920, canvas.height / 1080);
-
-    const w = 1920 * scale;
-
-    const h = 1080 * scale;
-
-    const x = (canvas.width - w) / 2;
-
-    const y = (canvas.height - h) / 2;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.drawImage(img, x, y, w, h);
-
-  }
- 
-  function playTo(target, onComplete) {
-
-    if (isPlaying) return;
-
-    isPlaying = true;
-
-    const direction = target > currentFrame ? 1 : -1;
-
-    function step() {
-
-      if (currentFrame === target) {
-
-        isPlaying = false;
-
-        if (onComplete) onComplete();
-
-        return;
-
-      }
-
-      currentFrame += direction;
-
-      drawFrame(currentFrame);
-
-      requestAnimationFrame(step);
-
-    }
-
-    requestAnimationFrame(step);
-
-  }
- 
-  window.addEventListener("scroll", () => {
-
-    const scrollY = window.scrollY;
-
-    const scrollingDown = scrollY > lastScrollY;
-
-    lastScrollY = scrollY;
- 
-    if (scrollingDown) {
-
-      if (phase === 0) {
-
-        phase = 1;
-
-        playTo(50, () => { phase = 2; });
-
-      } else if (phase === 2) {
-
-        phase = 3;
-
-        playTo(104, () => { phase = 4; });
-
-      }
-
-    } else {
-
-      if (phase === 4) {
-
-        phase = 5;
-
-        playTo(50, () => { phase = 6; });
-
-      } else if (phase === 6) {
-
-        phase = 0;
-
-        playTo(0, () => {});
-
-      }
-
-    }
-
-  });
- 
-  frames[0].onload = () => drawFrame(0);
-
+const frames = Array.from({ length: totalFrames }, (_, i) => {
+  const img = new Image();
+  img.src = `/images/seq_0_${i}.jpg`;
+  return img;
 });
+ 
+const canvas = document.querySelector(".lottie-player");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ 
+function drawFrame(index) {
+  const img = frames[index];
+  if (!img || !img.complete) return;
+  const scale = Math.max(canvas.width / 1920, canvas.height / 1080);
+  const w = 1920 * scale;
+  const h = 1080 * scale;
+  const x = (canvas.width - w) / 2;
+  const y = (canvas.height - h) / 2;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, x, y, w, h);
+}
+ 
+function playTo(target, onComplete) {
+  if (isPlaying) return;
+  isPlaying = true;
+  const direction = target > currentFrame ? 1 : -1;
+  function step() {
+    if (currentFrame === target) {
+      isPlaying = false;
+      if (onComplete) onComplete();
+      return;
+    }
+    currentFrame += direction;
+    drawFrame(currentFrame);
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+ 
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  const scrollingDown = scrollY > lastScrollY;
+  lastScrollY = scrollY;
+ 
+  if (scrollingDown) {
+    if (phase === 0) {
+      phase = 1;
+      playTo(50, () => { phase = 2; });
+    } else if (phase === 2) {
+      phase = 3;
+      playTo(104, () => { phase = 4; });
+    }
+  } else {
+    if (phase === 4) {
+      phase = 5;
+      playTo(50, () => { phase = 6; });
+    } else if (phase === 6) {
+      phase = 0;
+      playTo(0, () => {});
+    }
+  }
+});
+ 
+frames[0].onload = () => drawFrame(0);
  
 // ─── PROGRESSBAR ───
 
@@ -452,4 +392,6 @@ ScrollTrigger.create({
   onUpdate: (self) => {
     fillEl.style.height = `${self.progress * 100}%`;
   },
+});
+
 });

@@ -223,11 +223,10 @@ video {
 /* lottie-player */
 
 .lottie-player {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--black);
   position: sticky;
   top: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .lottie-wrapper {
