@@ -100,12 +100,13 @@ video {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.8rem;
-  padding: 1.6rem;
-  background: black;
+  gap: 0;
+  padding: 0;
+  background: var(--black);
   text-align: center;
   cursor: pointer;
   pointer-events: auto;
+  margin-bottom: 0;
 }
 
 /* ─── INTRO LAYER ─── */
@@ -210,7 +211,7 @@ video {
   font-family: serif;
   font-weight: 400;
   font-size: clamp(28px, 4.5vw, 68px);
-  color: white;
+  color: var(--white);
   text-align: center;
   letter-spacing: 0.12em;
   line-height: 1.2;
@@ -219,20 +220,16 @@ video {
   opacity: 0;
 }
 
-.lottie-wrapper {
-  height: 200vh;
-  position: relative;
-  background-color: #000000;
-}
+/* lottie-player */
 
 .lottie-player {
-  position: sticky;
-  top: 0;
   width: 100vw;
   height: 100vh;
+  background-color: var(--black);
+  position: sticky;
+  top: 0;
 }
 
-<<<<<<< HEAD
 .lottie-wrapper {
   height: 400vh;
   position: relative;
@@ -244,9 +241,6 @@ video {
 /* FOOTER */
 
 footer{
-=======
-footer {
->>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   display: flex;
   height: 50vh;
   width: 100%;
@@ -259,7 +253,7 @@ footer {
   background-color: var(--dark-green);
   color: var(--light-green);
 }
-.footer-tittle {
+.footer-tittle{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -268,12 +262,7 @@ footer {
   color: var(--light-green);
 }
 
-<<<<<<< HEAD
 .footer-tittle h2{
-=======
-.footer-tittle h2 {
-  color: #000;
->>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   text-align: center;
   font-family: Serif;
   font-size: 2em;
@@ -281,13 +270,8 @@ footer {
   font-weight: 400;
   line-height: normal;
 }
-<<<<<<< HEAD
 
 .footer-tittle h1{
-=======
-.footer-tittle h1 {
-  color: #000;
->>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   text-align: center;
   font-family: Serif;
   font-size: 8rem;
@@ -297,12 +281,8 @@ footer {
   letter-spacing: -2px;
   text-transform: uppercase;
 }
-<<<<<<< HEAD
 
 footer nav ul{
-=======
-footer nav ul {
->>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   display: flex;
   width: 280px;
   flex-direction: column;
@@ -311,7 +291,6 @@ footer nav ul {
   flex-shrink: 0;
   color: var(--light-green);
 }
-<<<<<<< HEAD
 
 footer nav ul li{
 text-align: right;
@@ -328,7 +307,7 @@ list-style: none;
 /* ─── PROGRESS BAR SIDEBAR ──────────────────────────────────── */
 #progress-bar {
   position: fixed;
-  right: left;
+  left: 0;
   top: 0;
   width: var(--bar-width);
   height: 100vh;
@@ -350,12 +329,12 @@ list-style: none;
  
 .pb-track {
   position: absolute;
-  left: 50%;
+  left: 50%; 
   transform: translateX(-50%);
   width: 2px;
   top: 0;
   bottom: 0;
-  
+  background: transparent;
 }
  
 .pb-fill {
@@ -364,7 +343,7 @@ list-style: none;
   left: 0;
   width: 100%;
   height: 0%;
-  background: var(--fill-color);
+  background:transparent;
   transform-origin: top center;
 }
  
@@ -469,27 +448,13 @@ list-style: none;
  
 /* ─── CONTENU PRINCIPAL ─────────────────────────────────────── */
 /* Laisse de la place pour la barre latérale à droite */
-main {
-  margin-right: var(--bar-width);
+main { 
+  margin-left: 0; 
+  margin-top: 0;
 }
- 
 /* Chaque section doit occuper au moins la hauteur de l'écran
    pour que ScrollTrigger puisse détecter le changement d'étape.
    Adapte selon ton layout. */
 .section {
   min-height: 100vh;
 }
-=======
-footer nav ul li {
-  color: #000;
-  text-align: right;
-  font-family: "Instrument Serif";
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 85.67%; /* 70.575px */
-  letter-spacing: -1px;
-  text-transform: uppercase;
-  list-style: none;
-}
->>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
