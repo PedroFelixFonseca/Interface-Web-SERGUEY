@@ -219,16 +219,20 @@ video {
   opacity: 0;
 }
 
-/* lottie-player */
-
-.lottie-player {
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  position: sticky;
-  top: 0;
+.lottie-wrapper {
+  height: 200vh;
+  position: relative;
+  background-color: #000000;
 }
 
+.lottie-player {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+<<<<<<< HEAD
 .lottie-wrapper {
   height: 400vh;
   position: relative;
@@ -240,6 +244,9 @@ video {
 /* FOOTER */
 
 footer{
+=======
+footer {
+>>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   display: flex;
   height: 50vh;
   width: 100%;
@@ -252,7 +259,7 @@ footer{
   background-color: var(--dark-green);
   color: var(--light-green);
 }
-.footer-tittle{
+.footer-tittle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -261,7 +268,12 @@ footer{
   color: var(--light-green);
 }
 
+<<<<<<< HEAD
 .footer-tittle h2{
+=======
+.footer-tittle h2 {
+  color: #000;
+>>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   text-align: center;
   font-family: Serif;
   font-size: 2em;
@@ -269,8 +281,13 @@ footer{
   font-weight: 400;
   line-height: normal;
 }
+<<<<<<< HEAD
 
 .footer-tittle h1{
+=======
+.footer-tittle h1 {
+  color: #000;
+>>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   text-align: center;
   font-family: Serif;
   font-size: 8rem;
@@ -280,8 +297,12 @@ footer{
   letter-spacing: -2px;
   text-transform: uppercase;
 }
+<<<<<<< HEAD
 
 footer nav ul{
+=======
+footer nav ul {
+>>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
   display: flex;
   width: 280px;
   flex-direction: column;
@@ -290,6 +311,7 @@ footer nav ul{
   flex-shrink: 0;
   color: var(--light-green);
 }
+<<<<<<< HEAD
 
 footer nav ul li{
 text-align: right;
@@ -457,3 +479,17 @@ main {
 .section {
   min-height: 100vh;
 }
+=======
+footer nav ul li {
+  color: #000;
+  text-align: right;
+  font-family: "Instrument Serif";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 85.67%; /* 70.575px */
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  list-style: none;
+}
+>>>>>>> 7ee2af25fce596702bf5853ace6b039dc74c2f74
