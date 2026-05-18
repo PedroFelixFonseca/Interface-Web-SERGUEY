@@ -6,7 +6,18 @@
 
 :root {
   --white: #fffff9;
-  --black: #1c1c1c;
+  --black: #171414;
+  --dark-green: #3c3e3a;
+  --light-green: #d7f2cc;
+  --bar-width:      88px;       /* largeur de la barre latérale      */
+  --bar-bg:         #f5f2ec;    /* fond de la barre                  */
+  --track-color:    #ddd8ce;    /* couleur du rail (inactif)         */
+  --fill-color:     #2a2318;    /* couleur du remplissage actif      */
+  --dot-size:       52px;       /* taille des cercles d'étapes       */
+  --dot-img-size:   32px;       /* taille du PNG dans le cercle      */
+  --label-color:    #8a8070;    /* couleur du texte de label         */
+  --label-active:   #2a2318;    /* couleur du label actif            */
+  --font-body:      'DM Sans', sans-serif;
 }
 
 a {
@@ -18,6 +29,18 @@ img,
 video {
   display: block;
 }
+
+.about{ 
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+
 
 .burger {
   position: fixed;
@@ -154,20 +177,20 @@ video {
 /* ─── CLICK TO START ─── */
 
 #cta {
-  font-family: serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: 400;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: white;
+  color: var(--white);
   animation: pulse 2.8s ease-in-out infinite;
 }
 @keyframes pulse {
   0%,
   100% {
-    opacity: 0.5;
+    opacity: 0.2;
   }
   50% {
-    opacity: 1;
+    opacity: 8;
   }
 }
 
@@ -198,7 +221,6 @@ video {
 
 /* lottie-player */
 
-/* animation scroll mains */
 .lottie-player {
   width: 100vw;
   height: 100vh;
@@ -214,8 +236,12 @@ video {
 
 /* animation scroll mains */
 
+
+/* FOOTER */
+
 footer{
   display: flex;
+  height: 50vh;
   width: 100%;
   padding: 16px 60px;
   justify-content: space-between;
@@ -223,6 +249,8 @@ footer{
   align-content: flex-start;
   flex-shrink: 0;
   flex-wrap: wrap;
+  background-color: var(--dark-green);
+  color: var(--light-green);
 }
 .footer-tittle{
   display: flex;
@@ -230,45 +258,202 @@ footer{
   align-items: flex-start;
   flex-shrink: 0;
   align-items: center;
+  color: var(--light-green);
 }
 
 .footer-tittle h2{
-  color: #000;
   text-align: center;
   font-family: Serif;
-  font-size: 1rem;
+  font-size: 2em;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
+
 .footer-tittle h1{
-  color: #000;
   text-align: center;
   font-family: Serif;
-  font-size: 4rem;
+  font-size: 8rem;
   font-style: normal;
   font-weight: 400;
   line-height: 85.67%; /* 250.57px */
   letter-spacing: -2px;
   text-transform: uppercase;
 }
+
 footer nav ul{
   display: flex;
   width: 280px;
   flex-direction: column;
   align-items: flex-end;
-  gap: 16px;
+  gap: 46px;
   flex-shrink: 0;
+  color: var(--light-green);
 }
+
 footer nav ul li{
-  color: #000;
-  text-align: right;
-  font-family: "Instrument Serif";
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 85.67%; /* 70.575px */
-  letter-spacing: -1.px;
+text-align: right;
+font-family: "Instrument Serif";
+font-size: 500%;
+font-style: normal;
+font-weight: 400;
+line-height: 85.67%; /* 108.577px */
+letter-spacing: -2.535px;
+text-transform: uppercase;
+list-style: none;
+}
+
+/* ─── PROGRESS BAR SIDEBAR ──────────────────────────────────── */
+#progress-bar {
+  position: fixed;
+  right: left;
+  top: 0;
+  width: var(--bar-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 2rem 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+#progress-bar.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+ 
+.pb-track {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  top: 0;
+  bottom: 0;
+  
+}
+ 
+.pb-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: var(--fill-color);
+  transform-origin: top center;
+}
+ 
+.pb-steps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+}
+ 
+.pb-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  flex: 1;
+  width: 100%;
+  justify-content: center;
+  padding: 1rem 0;
+  cursor: pointer;
+}
+ 
+.pb-dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.35s ease, transform 0.35s ease;
+  position: relative;
+  z-index: 3;
+}
+ 
+/* Image PNG dans le cercle */
+.pb-dot img {
+  width: var(--dot-img-size);
+  height: var(--dot-img-size);
+  object-fit: contain;
+  opacity: 0.35;
+  transition: opacity 0.35s ease;
+}
+ 
+/* Fallback numérique si pas d'image */
+.pb-dot .pb-fallback {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.35;
+  transition: opacity 0.35s ease;
+}
+ 
+/* Label sous le cercle */
+.pb-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  list-style: none;
+  color: var(--label-color);
+  text-align: center;
+  line-height: 1.3;
+  max-width: 70px;
+  transition: color 0.35s ease;
+}
+ 
+ 
+/* ─── ÉTAT ACTIF ─────────────────────────────────────────────── */
+.pb-step.is-active .pb-dot {
+  border-color: var(--fill-color);
+  background: var(--fill-color);
+  transform: scale(1.1);
+}
+ 
+.pb-step.is-active .pb-dot img,
+.pb-step.is-active .pb-dot .pb-fallback {
+  opacity: 1;
+  /* Rend le PNG blanc sur fond sombre.
+     Supprime cette ligne si tes icônes sont colorées. */
+  filter: invert(1) brightness(10);
+}
+ 
+.pb-step.is-active .pb-label {
+  color: var(--label-active);
+  font-weight: 600;
+}
+ 
+ 
+/* ─── ÉTAT PASSÉ ─────────────────────────────────────────────── */
+.pb-step.is-past .pb-dot {
+  border-color: var(--fill-color);
+  background: #fff;
+}
+ 
+.pb-step.is-past .pb-dot img,
+.pb-step.is-past .pb-dot .pb-fallback {
+  opacity: 0.8;
+}
+ 
+ 
+/* ─── CONTENU PRINCIPAL ─────────────────────────────────────── */
+/* Laisse de la place pour la barre latérale à droite */
+main {
+  margin-right: var(--bar-width);
+}
+ 
+/* Chaque section doit occuper au moins la hauteur de l'écran
+   pour que ScrollTrigger puisse détecter le changement d'étape.
+   Adapte selon ton layout. */
+.section {
+  min-height: 100vh;
 }
