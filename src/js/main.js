@@ -44,71 +44,116 @@ document.addEventListener("DOMContentLoaded", () => {
     )
     .to("#cta", { opacity: 0.75, duration: 1.2, ease: "power2.inOut" }, 1.4);
 
-  // ─── CANVAS ANIMATION ───
-  const totalFrames = 105;
-  let currentFrame = 0;
+  // ─── ANIMATION 1 — phases ───
+  const totalFrames1 = 105;
+  let currentFrame1 = 0;
   let phase = 0;
-  let isPlaying = false;
-  let lastScrollY = window.scrollY;
-  let autoScrolling = false;
-  let canvasVisible = false;
+  let isPlaying1 = false;
+  let canvasVisible1 = false;
 
-  const frames = Array.from({ length: totalFrames }, (_, i) => {
+  const frames1 = Array.from({ length: totalFrames1 }, (_, i) => {
     const img = new Image();
-    img.src = `/images/seq_0_${i}.jpg`;
+    img.src = `/images-livre/seq_0_${i}.jpg`;
     return img;
   });
 
-  const canvas = document.querySelector(".lottie-player");
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const canvas1 = document.getElementById("canvas-1");
+  const ctx1 = canvas1.getContext("2d");
+  canvas1.width = window.innerWidth;
+  canvas1.height = window.innerHeight;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-
-      if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-        phase = 0;
-        currentFrame = 0;
-        isPlaying = false;
-        drawFrame(0);
-      }
-
-      canvasVisible = entry.isIntersecting;
-    },
-    { threshold: 0.1 },
-  );
-
-  observer.observe(canvas);
-
-  function drawFrame(index) {
-    const img = frames[index];
+  function drawFrame1(index) {
+    const img = frames1[index];
     if (!img || !img.complete) return;
-    const w = canvas.width * 0.8;
-    const h = w * (1 / 1);
-    const x = (canvas.width - w) / 2;
-    const y = (canvas.height - h) / 2;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, x, y, w, h);
+    const w = canvas1.width * 0.8;
+    const h = w;
+    const x = (canvas1.width - w) / 2;
+    const y = (canvas1.height - h) / 2;
+    ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+    ctx1.drawImage(img, x, y, w, h);
   }
 
   function playTo(target, onComplete) {
-    if (isPlaying) return;
-    isPlaying = true;
-    const direction = target > currentFrame ? 1 : -1;
+    if (isPlaying1) return;
+    isPlaying1 = true;
+    const direction = target > currentFrame1 ? 1 : -1;
     function step() {
-      if (currentFrame === target) {
-        isPlaying = false;
+      if (currentFrame1 === target) {
+        isPlaying1 = false;
         if (onComplete) onComplete();
         return;
       }
-      currentFrame += direction;
-      drawFrame(currentFrame);
+      currentFrame1 += direction;
+      drawFrame1(currentFrame1);
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
   }
+
+  const observer1 = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+        phase = 0;
+        currentFrame1 = 0;
+        isPlaying1 = false;
+        drawFrame1(0);
+      }
+      canvasVisible1 = entry.isIntersecting;
+    },
+    { threshold: 0.1 },
+  );
+
+  observer1.observe(canvas1);
+  frames1[0].onload = () => drawFrame1(0);
+
+  // ─── ANIMATION 2 — scroll continu ───
+  const totalFrames2 = 119;
+  let currentFrame2 = 0;
+  let canvasVisible2 = false;
+
+  const frames2 = Array.from({ length: totalFrames2 }, (_, i) => {
+    const img = new Image();
+    img.src = `/Images-eglise/Comp 1_${String(i).padStart(5, "0")}.png`;
+    img.onload = () => console.log(`frame2 ${i} chargée`);
+    img.onerror = () => console.error(`frame2 ${i} ERREUR`);
+    return img;
+  });
+
+  const canvas2 = document.getElementById("canvas-2");
+  const ctx2 = canvas2.getContext("2d");
+  canvas2.width = window.innerWidth;
+  canvas2.height = window.innerHeight;
+
+  function drawFrame2(index) {
+    const img = frames2[index];
+    if (!img || !img.complete) return;
+    const w = canvas2.width * 0.8;
+    const h = w;
+    const x = (canvas2.width - w) / 2;
+    const y = (canvas2.height - h) / 2;
+    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+    ctx2.drawImage(img, x, y, w, h);
+  }
+
+  const observer2 = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+        currentFrame2 = 0;
+        drawFrame2(0);
+      }
+      canvasVisible2 = entry.isIntersecting;
+    },
+    { threshold: 0.1 },
+  );
+
+  observer2.observe(canvas2);
+  frames2[0].onload = () => drawFrame2(0);
+
+  // ─── SCROLL LISTENER ───
+  let lastScrollY = window.scrollY;
+  let autoScrolling = false;
 
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
@@ -116,34 +161,43 @@ document.addEventListener("DOMContentLoaded", () => {
     lastScrollY = scrollY;
 
     if (autoScrolling) return;
-    if (!canvasVisible) return;
 
-    if (scrollingDown) {
-      if (phase === 0) {
-        phase = 1;
-        playTo(50, () => {
-          phase = 2;
-        });
-      } else if (phase === 2) {
-        phase = 3;
-        playTo(104, () => {
-          phase = 4;
-        });
+    if (canvasVisible1) {
+      if (scrollingDown) {
+        if (phase === 0) {
+          phase = 1;
+          playTo(50, () => {
+            phase = 2;
+          });
+        } else if (phase === 2) {
+          phase = 3;
+          playTo(104, () => {
+            phase = 4;
+          });
+        }
+      } else {
+        if (phase === 4) {
+          phase = 5;
+          playTo(50, () => {
+            phase = 6;
+          });
+        } else if (phase === 6) {
+          phase = 0;
+          playTo(0, () => {});
+        }
       }
-    } else {
-      if (phase === 4) {
-        phase = 5;
-        playTo(50, () => {
-          phase = 6;
-        });
-      } else if (phase === 6) {
-        phase = 0;
-        playTo(0, () => {});
+    }
+
+    if (canvasVisible2) {
+      if (scrollingDown && currentFrame2 < totalFrames2 - 1) {
+        currentFrame2++;
+        drawFrame2(currentFrame2);
+      } else if (!scrollingDown && currentFrame2 > 0) {
+        currentFrame2--;
+        drawFrame2(currentFrame2);
       }
     }
   });
-
-  frames[0].onload = () => drawFrame(0);
 
   // ─── CLICK HANDLER ───
   const clickConfig = {
@@ -212,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, clickConfig.revealDelay * 1000);
 
     setTimeout(() => {
-      const wrapper = document.querySelector(".lottie-wrapper");
+      const wrapper = document.getElementById("wrapper-1");
       if (wrapper) {
         autoScrolling = true;
         wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -220,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
           autoScrolling = false;
         }, 1500);
       }
-    }, clickConfig.lottieScrollDelay * 700);
+    }, clickConfig.lottieScrollDelay * 1000);
   });
 
   // ─── PROGRESSBAR ───
