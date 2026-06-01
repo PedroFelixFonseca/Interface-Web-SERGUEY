@@ -14,64 +14,46 @@
      <h1>Serguey <br> Parajanov</h1>
      <img src="img/serguei_page-portrait.png" alt="serguey parajanov">
     </div> 
+    
+    <div class="description">
     <section class="collage-section" id="collage-section">
-     <div class="description">
     <h1 class="description-text">Sergey Parajanov was an Armenian film director, screenwriter and artist.</h1>
    </div>
-   <div class="collage-img"
-      data-x="62" data-y="8"
-      data-rot="-6" data-z="3"
-      data-speed-x="0.3" data-speed-y="-0.55" data-speed-r="0.04"
-      data-w="180" data-h="130">
-      <!--
-        Remplace ce <div class="collage-placeholder"> par ton image :
-        <img src="ma-photo.jpg" alt="Description">
-      -->
-      <div class="collage-placeholder">image 01</div>
-    </div>
+      <div class="collage-img"> <img src="./img/sergei-jump.jpg" alt="image 01"></div>
+      <div class="collage-img"> <img src="./img/serguei-jail.webp" alt="image 02"></div>
+      <div class="collage-img"> <img src="./img/serguey-portrait.jpg" alt="image 03"> </div>
+      <div class="collage-img"> <img src="./img/serguei-stick.jpg" alt="image 04"> </div>
  
-    <div class="collage-img"
-      data-x="5" data-y="35"
-      data-rot="5" data-z="2"
-      data-speed-x="-0.4" data-speed-y="0.4" data-speed-r="-0.05"
-      data-w="155" data-h="200">
-        <img src="#" alt="image 02">
-    </div>
- 
-    <div class="collage-img"
-      data-x="55" data-y="52"
-      data-rot="-3" data-z="4"
-      data-speed-x="0.5" data-speed-y="0.35" data-speed-r="0.06"
-      data-w="200" data-h="130">
-      <img src="#" alt="image 03">
-    </div>
- 
-    <div class="collage-img"
-      data-x="30" data-y="70"
-      data-rot="8" data-z="5"
-      data-speed-x="-0.3" data-speed-y="-0.45" data-speed-r="-0.03"
-      data-w="160" data-h="120">
-      <img src="#" alt="image 04">
-    </div>
- 
-  </section>
+    </section>
+</div>
 
 
-   <div>
-    <div>
+   <div class="projects">
+    <div class="projects-1">
         <p>Before 1963 he directed four non-remarkable full-length feature and three short documentary films. In 1964 his «Shadows of Forgotten Ancestors» («Wild Horses of Fire»), brought him world fame. The strange thing about Parajanov's life is the fact that misfortune came only after he became famous. In 1965 he began his work over an anti-war film “Kiev Frescos», which was soon banned.
          In 1966 Parajanov was invited to Armenia where he started his work on “Sayat-Nova”.
         </p>
-        <img src="#" alt="sayat nova poster">
+        <img src="./img/sayat_nova_poster.png" alt="sayat nova poster">
     </div>
-    <div>
-        <img src="#" alt="">
+    <div class="projects-2">
+        <img src="./img/sayat_nova_poster.png" alt="sayat nova poster">
         <p>With great difficulties, this film was released on a screen in 1969 under the title “The Colour of Pomegranates”.
              It is considered to be his best work after which he was deprived of the possibility of making movies for 15 long years.
         </p>
     </div>
 </div>
 
+
+    <!-- FOOTER -->
+    <include src="./components/footer.html"></include>
+
+  <!--
+    GSAP (obligatoire) — chargé depuis un CDN.
+    Si tu l'as déjà dans ton projet, retire ces deux lignes.
+  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/collage.js"></script>
 
 </body>
 </html>
