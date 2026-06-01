@@ -61,16 +61,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx1 = canvas1.getContext("2d");
   canvas1.width = window.innerWidth;
   canvas1.height = window.innerHeight;
-
   function drawFrame1(index) {
     const img = frames1[index];
     if (!img || !img.complete) return;
-    const w = canvas1.width * 0.8;
-    const h = w;
-    const x = (canvas1.width - w) / 2;
-    const y = (canvas1.height - h) / 2;
+
+    const scale = 1.2; // ← ajuste ce chiffre, 1 = normal, 1.2 = 20% plus grand
+    const ratio = img.naturalHeight / img.naturalWidth;
+    const w = canvas1.width;
+    const h = w * ratio;
+
+    let finalW = w;
+    let finalH = h;
+    if (h > canvas1.height) {
+      finalH = canvas1.height;
+      finalW = finalH / ratio;
+    }
+
+    finalW *= scale;
+    finalH *= scale;
+
+    const x = (canvas1.width - finalW) / 2;
+    const y = (canvas1.height - finalH) / 2;
+
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-    ctx1.drawImage(img, x, y, w, h);
+    ctx1.drawImage(img, x, y, finalW, finalH);
   }
 
   function playTo(target, onComplete) {
@@ -128,12 +142,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function drawFrame2(index) {
     const img = frames2[index];
     if (!img || !img.complete) return;
-    const w = canvas2.width * 0.8;
-    const h = w;
-    const x = (canvas2.width - w) / 2;
-    const y = (canvas2.height - h) / 2;
+
+    const ratio = img.naturalHeight / img.naturalWidth;
+    const w = canvas2.width;
+    const h = w * ratio;
+
+    // Si l'image est trop haute, on la réduit pour qu'elle rentre
+    let finalW = w;
+    let finalH = h;
+    if (h > canvas2.height) {
+      finalH = canvas2.height;
+      finalW = finalH / ratio;
+    }
+
+    const x = (canvas2.width - finalW) / 2;
+    const y = (canvas2.height - finalH) / 2;
+
     ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-    ctx2.drawImage(img, x, y, w, h);
+    ctx2.drawImage(img, x, y, finalW, finalH);
   }
 
   const observer2 = new IntersectionObserver(
