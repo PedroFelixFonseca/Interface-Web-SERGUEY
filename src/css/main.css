@@ -6,21 +6,44 @@
 body {
   background-color: #000000;
 }
+/* Smooth scroll natif pour les clics de la progress bar */
+html {
+  scroll-behavior: smooth;
+}
 
+/* Curseur cohérent sur les étapes cliquables */
+.pb-step {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.pb-step:hover {
+  opacity: 0.75;
+}
+
+/* Anti-aliasing des canvas */
+canvas {
+  image-rendering: -webkit-optimize-contrast; /* Safari */
+  image-rendering: crisp-edges;
+}
+
+/* Évite le flash blanc entre sections */
+.section {
+  background: #000;
+}
 :root {
-  --white:          #fffff9;
-  --black:          #171414;
-  --dark-green:     #3c3e3a;
-  --light-green:    #d7f2cc;
-  --bar-width:      88px;       /* largeur de la barre latérale      */
-  --bar-bg:         #f5f2ec;    /* fond de la barre                  */
-  --track-color:    #ddd8ce;    /* couleur du rail (inactif)         */
-  --fill-color:     #2a2318;    /* couleur du remplissage actif      */
-  --dot-size:       52px;       /* taille des cercles d'étapes       */
-  --dot-img-size:   32px;       /* taille du PNG dans le cercle      */
-  --label-color:    #8a8070;    /* couleur du texte de label         */
-  --label-active:   #2a2318;    /* couleur du label actif            */
-  --font-body:      'DM Sans', sans-serif;
+  --white: #fffff9;
+  --black: #171414;
+  --dark-green: #3c3e3a;
+  --light-green: #d7f2cc;
+  --bar-width: 88px; /* largeur de la barre latérale      */
+  --bar-bg: #f5f2ec; /* fond de la barre                  */
+  --track-color: #ddd8ce; /* couleur du rail (inactif)         */
+  --fill-color: #2a2318; /* couleur du remplissage actif      */
+  --dot-size: 52px; /* taille des cercles d'étapes       */
+  --dot-img-size: 32px; /* taille du PNG dans le cercle      */
+  --label-color: #8a8070; /* couleur du texte de label         */
+  --label-active: #2a2318; /* couleur du label actif            */
+  --font-body: "DM Sans", sans-serif;
 }
 
 a {
@@ -94,9 +117,12 @@ video {
 
 /* ─── SCENE WRAPPER ─── */
 #scene {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -120,6 +146,7 @@ video {
   gap: 0.35em;
   width: min(90vw, 900px);
   max-width: 100%;
+  pointer-events: none;
 }
 
 #title-sayat {
@@ -164,6 +191,7 @@ video {
   align-items: center;
   z-index: 10;
   will-change: transform;
+  pointer-events: none;
 }
 
 #pomegranate {
@@ -185,6 +213,7 @@ video {
   text-transform: uppercase;
   color: var(--white);
   animation: pulse 2.8s ease-in-out infinite;
+  pointer-events: none;
 }
 @keyframes pulse {
   0%,
@@ -457,4 +486,14 @@ main {
    Adapte selon ton layout. */
 .section {
   min-height: 100vh;
+}
+
+#section-2 {
+  height: 400vh; /* assez long pour scroller tranquillement */
+}
+
+#section-2 .lottie-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }

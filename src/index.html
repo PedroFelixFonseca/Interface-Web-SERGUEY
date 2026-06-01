@@ -2,14 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>eikon parcel startertt</title>
+    <title>eikon parcel starter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
   </head>
-
   <body>
     <!-- Burger Menu -->
     <button class="burger">
@@ -18,41 +20,6 @@
       <span></span>
     </button>
 
-  <nav class="menu">
-  <ul>
-    <li><a href="#">Accueil</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  </nav>
-  
-  <div id="scene">
-    <!-- INTRO -->
-    <div id="intro">
-      <div id="title-sayat">Sayat<br />Nova</div>
-      <div id="byline">
-        <span>A film by</span>
-        <span class="director">Serguey Parajanov</span>
-      </div>
-    </div>
-    
-    <!-- POMEGRANATE PNG -->
-    <div id="pomegranate-wrap">
-      <img
-      id="pomegranate" src="img/hands-head-background.png" alt="pomegranate" />
-    </div>
-    
-    <!-- CTA -->
-    <div id="cta">Click to start</div>
-    
-    <!-- REVEAL -->
-    <div id="reveal">
-      <div id="title-pomegranates">The Color of<br />Pomegranates</div>
-    </div>
-  </div>
-
-
-  
     <nav class="menu">
       <ul>
         <li><a href="#">Accueil</a></li>
@@ -61,8 +28,8 @@
       </ul>
     </nav>
 
+    <!-- SCENE INTRO -->
     <div id="scene">
-      <!-- INTRO -->
       <div id="intro">
         <div id="title-sayat">Sayat<br />Nova</div>
         <div id="byline">
@@ -70,8 +37,6 @@
           <span class="director">Serguey Parajanov</span>
         </div>
       </div>
-
-      <!-- POMEGRANATE PNG -->
       <div id="pomegranate-wrap">
         <img
           id="pomegranate"
@@ -79,16 +44,13 @@
           alt="pomegranate"
         />
       </div>
-
-      <!-- CTA -->
       <div id="cta">Click to start</div>
-
-      <!-- REVEAL -->
       <div id="reveal">
         <div id="title-pomegranates">The Color of<br />Pomegranates</div>
       </div>
     </div>
 
+    <!-- PROGRESS BAR -->
     <nav id="progress-bar" aria-label="Progression de la page">
       <div class="pb-track">
         <div class="pb-fill" id="pb-fill"></div>
@@ -96,31 +58,23 @@
       <div class="pb-steps" id="pb-steps"></div>
     </nav>
 
+    <!-- MAIN CONTENT -->
     <main id="main-content">
       <section class="section" id="section-1">
         <div class="lottie-wrapper" id="wrapper-1">
           <canvas id="canvas-1"></canvas>
         </div>
       </section>
-
       <section class="section" id="section-2">
         <div class="lottie-wrapper" id="wrapper-2">
           <canvas id="canvas-2"></canvas>
         </div>
       </section>
-
       <section class="section" id="section-3"></section>
-
-      <section class="section" id="section-4">
-        <!-- Ton contenu ici -->
-      </section>
-
-      <section class="section" id="section-5">
-        <!-- Ton contenu ici -->
-      </section>
+      <section class="section" id="section-4"></section>
+      <section class="section" id="section-5"></section>
     </main>
 
-    <!-- FOOTER -->
     <include src="./components/footer.html"></include>
 
     <script src="js/main.js" type="module"></script>
