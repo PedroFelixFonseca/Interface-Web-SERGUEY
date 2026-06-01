@@ -1,0 +1,62 @@
+* {
+box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --white:          #fffff9;
+  --black:          #171414;
+  --dark-green:     #3c3e3a;
+  --light-green:    #d7f2cc;
+  --bar-width:      88px;       /* largeur de la barre latérale      */
+  --bar-bg:         #f5f2ec;    /* fond de la barre                  */
+  --track-color:    #ddd8ce;    /* couleur du rail (inactif)         */
+  --fill-color:     #2a2318;    /* couleur du remplissage actif      */
+  --dot-size:       52px;       /* taille des cercles d'étapes       */
+  --dot-img-size:   32px;       /* taille du PNG dans le cercle      */
+  --label-color:    #8a8070;    /* couleur du texte de label         */
+  --label-active:   #2a2318;    /* couleur du label actif            */
+  --font-body:      'DM Sans', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--light-green);
+  color: var(--dark-green);
+}
+
+.about-hero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: var(--dark-green);
+  color: var(--light-green);
+}
+.about-hero h1 {
+  font-size: 294px;
+  margin-bottom: 20px;
+  letter-spacing: -2%;
+  font-weight: 300;
+  line-height: 100%; 
+  font-family: 'Instrument Serif',serif;
+}
+.about-hero img {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+}  
+.description {
+  padding: 40px;
+  
+}
+.description-text {
+    font-size: 294px;
+    font-family: 'Instrument Serif',serif;
+    font-weight: 300;
+    letter-spacing: -2%;
+    line-height: 100%;
+}   
