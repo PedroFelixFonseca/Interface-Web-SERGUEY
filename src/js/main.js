@@ -284,15 +284,18 @@ document.addEventListener("DOMContentLoaded", () => {
           enteredFromTop = false; // ← fix retour arrière
           playTo(50, () => {
             // Animer le décalage après la première séquence
-            gsap.to({ x: offsetX1 }, {
-              x: 300,
-              duration: 0.8,
-              ease: "power2.inOut",
-              onUpdate: function() {
-                offsetX1 = this.targets()[0].x;
-                drawFrame1(currentFrame1);
+            gsap.to(
+              { x: offsetX1 },
+              {
+                x: 300,
+                duration: 0.8,
+                ease: "power2.inOut",
+                onUpdate: function () {
+                  offsetX1 = this.targets()[0].x;
+                  drawFrame1(currentFrame1);
+                },
               },
-            });
+            );
             setTimeout(() => {
               phase = 2;
             }, 200);
@@ -490,7 +493,7 @@ document.addEventListener("DOMContentLoaded", () => {
         0,
         0,
         magnifierSize,
-        magnifierSize
+        magnifierSize,
       );
     });
 
@@ -526,7 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
         0,
         0,
         magnifierSize,
-        magnifierSize
+        magnifierSize,
       );
     });
 
