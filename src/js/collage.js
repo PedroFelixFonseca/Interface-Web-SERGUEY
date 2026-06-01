@@ -41,28 +41,28 @@ const IMAGES_CONFIG = [
   {
     // Image 01 — en haut à droite
     x: 62,  y: 80,
-    w: 180, h: 130,
+    w: 480, h: 330,
     rot: -6, z: 3,
     speedX:  0.3,  speedY: -0.55, speedR:  0.04,
   },
   {
     // Image 02 — à gauche, milieu
-    x: 50,   y: 86,
-    w: 155, h: 200,
+    x: 50, y: 50,
+    w: 480, h: 330,
     rot:  5, z: 2,
     speedX: -0.4,  speedY:  0.4,  speedR: -0.05,
   },
   {
     // Image 03 — centre-droite
-    x: 55,  y: 88,
-    w: 200, h: 130,
+    x: 55,  y: 98,
+    w: 400, h: 330,
     rot: -3, z: 4,
     speedX:  0.5,  speedY:  0.35, speedR:  0.06,
   },
   {
     // Image 04 — bas centre
     x: 30,  y: 120,
-    w: 160, h: 120,
+    w: 360, h: 320,
     rot:  8, z: 5,
     speedX: -0.3,  speedY: -0.45, speedR: -0.03,
   },

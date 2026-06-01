@@ -43,24 +43,32 @@ body {
   text-align: center;
   background-color: var(--dark-green);
   color: var(--light-green);
+  padding: 60px 60px;
 }
 .about-hero h1 {
   font-size: 294px;
-  margin-bottom: 20px;
   letter-spacing: -2%;
   font-weight: 300;
   line-height: 100%; 
   font-family: 'Instrument Serif',serif;
+  text-align: left;
+  align-self: flex-start;
+  z-index: 1000;
+  left: 60px;
+  position: absolute;
+  margin-bottom: 60px;
 }
 .about-hero img {
-  width: 300px;
+  width: 70%;
   height: auto;
   object-fit: cover;
+  position: absolute;
+  align-self: flex-end;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
 }  
-.description {
-  padding: 40px;
-  
-}
+
 .description-text {
     font-size: 294px;
     font-family: 'Instrument Serif',serif;
@@ -68,6 +76,7 @@ body {
     letter-spacing: -2%;
     line-height: 100%;
     z-index: 1000;
+    text-align: left;
 }   
 
 .collage-section {
@@ -75,13 +84,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 60px;
 }
 
 .collage-img {
   position: absolute;
   overflow: hidden;
-  cursor: pointer;
+  width: 300px;
   will-change: transform;
  
   /* Transition au hover pour un retour visuel subtil */
@@ -89,23 +98,17 @@ body {
   transition: filter 0.3s ease;
 }
  
-.collage-img:hover {
-  filter: brightness(1.06);   /* ← légèrement plus lumineux au survol */
-}
- 
 .collage-img img {
   width: 100%;
   height: 100%;
   letter-spacing: 0.1em;
   display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover; 
 }
 .projects {
   display: flex;
-  padding: 80px 60px;
   flex-direction: column;
+  padding: 80px 60px;
   align-items: flex-start;
   gap: 64px;
   background-color: var(--dark-green);
@@ -125,7 +128,7 @@ font-weight: 400;
 line-height: normal;
 }
 projects-1 img, .projects-2 img {
-  width: 300px;
+  max-width:600px;
   height: auto;
   object-fit: cover;
 }
@@ -143,8 +146,8 @@ footer {
   align-content: flex-start;
   flex-shrink: 0;
   flex-wrap: wrap;
-  background-color: var(--dark-green);
-  color: var(--light-green);
+  background-color: var(--light-green);
+  color: var(--dark-green);
 }
 .footer-tittle {
   display: flex;
@@ -152,7 +155,6 @@ footer {
   align-items: flex-start;
   flex-shrink: 0;
   align-items: center;
-  color: var(--light-green);
 }
 
 .footer-tittle h2 {
@@ -182,7 +184,6 @@ footer nav ul {
   align-items: flex-end;
   gap: 46px;
   flex-shrink: 0;
-  color: var(--light-green);
 }
 
 footer nav ul li {
