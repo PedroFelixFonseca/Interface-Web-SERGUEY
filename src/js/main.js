@@ -2,6 +2,26 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ─── BLOCK/UNBLOCK SCROLL — en premier ───
+  let scrollPosition = 0;
+
+  function blockScroll() {
+    scrollPosition = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = "100%";
+  }
+
+  function unblockScroll() {
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo(0, scrollPosition);
+  }
+
+  // ─── BLOQUER PENDANT L'OVERLAY ───
+  blockScroll();
+
   // ─── BURGER MENU ───
   const burger = document.querySelector(".burger");
   const menu = document.querySelector(".menu");
@@ -44,35 +64,78 @@ document.addEventListener("DOMContentLoaded", () => {
     )
     .to("#cta", { opacity: 0.75, duration: 1.2, ease: "power2.inOut" }, 1.4);
 
-  // ─── BLOCK/UNBLOCK SCROLL ───
-  let scrollPosition = 0;
+  // ─── CLICK HANDLER (scène intro) ───
+  const clickConfig = {
+    textFade: 0.7,
+    textMoveY: -20,
+    pomegranateMove: 1.3,
+    pomegranateFade: 0.8,
+  };
 
-  function blockScroll() {
-    scrollPosition = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollPosition}px`;
-    document.body.style.width = "100%";
-  }
+  let clicked = false;
+  const sceneEl = document.getElementById("scene");
 
-  function unblockScroll() {
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.width = "";
-    window.scrollTo(0, scrollPosition);
-  }
+  sceneEl.addEventListener("click", () => {
+    if (clicked) return;
+    clicked = true;
+    gsap.killTweensOf("#cta");
+
+    const wrap = document.getElementById("pomegranate-wrap");
+    const rect = wrap.getBoundingClientRect();
+    const dx = window.innerWidth / 2 - (rect.left + rect.width / 2);
+    const dy = window.innerHeight / 2 - (rect.top + rect.height / 2);
+
+    gsap.to(["#title-sayat", "#byline", "#cta"], {
+      opacity: 0,
+      y: clickConfig.textMoveY,
+      duration: clickConfig.textFade,
+      stagger: 0.06,
+    });
+
+    setTimeout(
+      () => {
+        document.getElementById("cta").style.display = "none";
+      },
+      (clickConfig.textFade + 0.1) * 1000,
+    );
+
+    gsap.to("#pomegranate-wrap", {
+      x: dx,
+      y: dy,
+      scale: 1.12,
+      duration: clickConfig.pomegranateMove,
+      ease: "expo.inOut",
+    });
+
+    gsap.to("#pomegranate-wrap", {
+      opacity: 0,
+      duration: clickConfig.pomegranateFade,
+      ease: "power2.inOut",
+      delay: 0.4,
+      onComplete: () => {
+        wrap.style.display = "none";
+      },
+    });
+
+    gsap.to("#scene", {
+      opacity: 0,
+      duration: 1.2,
+      ease: "power2.inOut",
+      delay: 0.8,
+      onComplete: () => {
+        unblockScroll(); // ← libère le scroll overlay, le canvas prend le relais
+        document.getElementById("scene").style.display = "none";
+      },
+    });
+  });
 
   // ─── ANIMATION 1 — phases (livre) ───
-  // 105 frames JPG, animation en 4 phases déclenchées par scroll
-  // Phase 0→1 : scroll bas → joue 0→50   (bloque scroll)
-  // Phase 2→3 : scroll bas → joue 50→104 (bloque scroll)
-  // Phase 4→5 : scroll haut → joue 104→50 (libre)
-  // Phase 6→0 : scroll haut → joue 50→0   (libre)
   const totalFrames1 = 105;
   let currentFrame1 = 0;
   let phase = 0;
   let isPlaying1 = false;
   let canvasVisible1 = false;
-  let enteredFromTop = false; // true si on arrive dans la section par le haut
+  let enteredFromTop = false;
 
   const frames1 = Array.from({ length: totalFrames1 }, (_, i) => {
     const img = new Image();
@@ -128,21 +191,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const observer1 = new IntersectionObserver(
     (entries) => {
       const entry = entries[0];
-
       if (entry.isIntersecting) {
-        // Entrée par le haut = on descend dans la page et la section était déjà au-dessus
-        // Entrée par le bas = scroll normal vers le bas
         enteredFromTop = entry.boundingClientRect.top < 0;
-
         if (enteredFromTop) {
-          // Retour nav ou scroll remontant : reset sans bloquer
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
           drawFrame1(0);
         }
       } else {
-        // Section quittée par le haut (on remonte au-delà) → reset
         if (entry.boundingClientRect.top > 0) {
           phase = 0;
           currentFrame1 = 0;
@@ -151,7 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
           drawFrame1(0);
         }
       }
-
       canvasVisible1 = entry.isIntersecting;
     },
     { threshold: 0.1 },
@@ -208,6 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   observer2.observe(canvas2);
   frames2[0].onload = () => drawFrame2(0);
+
   // ─── SCROLL LISTENER ───
   let lastScrollY = window.scrollY;
   let autoScrolling = false;
@@ -217,13 +274,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollingDown = scrollY > lastScrollY;
     lastScrollY = scrollY;
 
-    // Retour via nav : on ignore tout le scroll
     if (autoScrolling) return;
 
     if (canvasVisible1) {
       if (scrollingDown) {
         if (phase === 0) {
           phase = 1;
+          enteredFromTop = false; // ← fix retour arrière
           playTo(50, () => {
             setTimeout(() => {
               phase = 2;
@@ -231,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         } else if (phase === 2) {
           phase = 3;
+          enteredFromTop = false; // ← fix retour arrière
           playTo(104, () => {
             setTimeout(() => {
               phase = 4;
@@ -238,8 +296,6 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
       } else {
-        // Phases retour uniquement si on était déjà dans la section
-        // (pas en train d'y entrer par le haut)
         if (!enteredFromTop) {
           if (phase === 4) {
             phase = 5;
@@ -266,84 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-
-  // ─── CLICK HANDLER (scène intro) ───
-  const clickConfig = {
-    textFade: 0.7,
-    textMoveY: -20,
-    pomegranateMove: 1.3,
-    pomegranateFade: 0.8,
-    revealDelay: 1.0,
-    lottieScrollDelay: 2.8,
-  };
-
-  let clicked = false;
-  const sceneEl = document.getElementById("scene");
-
-  sceneEl.addEventListener("click", () => {
-    if (clicked) return;
-    clicked = true;
-    gsap.killTweensOf("#cta");
-
-    const wrap = document.getElementById("pomegranate-wrap");
-    const rect = wrap.getBoundingClientRect();
-    const dx = window.innerWidth / 2 - (rect.left + rect.width / 2);
-    const dy = window.innerHeight / 2 - (rect.top + rect.height / 2);
-
-    gsap.to(["#title-sayat", "#byline", "#cta"], {
-      opacity: 0,
-      y: clickConfig.textMoveY,
-      duration: clickConfig.textFade,
-      stagger: 0.06,
-    });
-
-    setTimeout(
-      () => {
-        document.getElementById("cta").style.display = "none";
-      },
-      (clickConfig.textFade + 0.1) * 1000,
-    );
-
-    gsap.to("#pomegranate-wrap", {
-      x: dx,
-      y: dy,
-      scale: 1.12,
-      duration: clickConfig.pomegranateMove,
-      ease: "expo.inOut",
-    });
-
-    gsap.to("#pomegranate-wrap", {
-      opacity: 0,
-      duration: clickConfig.pomegranateFade,
-      ease: "power2.inOut",
-      delay: 0.4,
-      onComplete: () => {
-        wrap.style.display = "none";
-      },
-    });
-
-    setTimeout(() => {
-      document.getElementById("reveal").style.pointerEvents = "none";
-      gsap.to("#reveal", { opacity: 1, duration: 0.01 });
-      gsap.to("#title-pomegranates", {
-        opacity: 1,
-        duration: 1.6,
-        ease: "power2.out",
-      });
-    }, clickConfig.revealDelay * 1000);
-
-    setTimeout(() => {
-      const wrapper = document.getElementById("wrapper-1");
-      if (wrapper) {
-        autoScrolling = true;
-        wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
-        setTimeout(() => {
-          autoScrolling = false;
-        }, 1500);
-      }
-    }, clickConfig.lottieScrollDelay * 1000);
-  });
-
   // ─── PROGRESSBAR ───
   gsap.registerPlugin(ScrollTrigger);
 
@@ -378,7 +356,6 @@ document.addEventListener("DOMContentLoaded", () => {
     el.addEventListener("click", () => {
       const target = document.getElementById(step.id);
       if (target) {
-        // Reset animations et scroll sans bloquer
         phase = 0;
         currentFrame1 = 0;
         isPlaying1 = false;
