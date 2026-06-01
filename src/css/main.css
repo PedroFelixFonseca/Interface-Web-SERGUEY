@@ -8,19 +8,19 @@ body {
 }
 
 :root {
-  --white: #fffff9;
-  --black: #171414;
-  --dark-green: #3c3e3a;
-  --light-green: #d7f2cc;
-  --bar-width: 88px; /* largeur de la barre latérale      */
-  --bar-bg: #f5f2ec; /* fond de la barre                  */
-  --track-color: #ddd8ce; /* couleur du rail (inactif)         */
-  --fill-color: #2a2318; /* couleur du remplissage actif      */
-  --dot-size: 52px; /* taille des cercles d'étapes       */
-  --dot-img-size: 32px; /* taille du PNG dans le cercle      */
-  --label-color: #8a8070; /* couleur du texte de label         */
-  --label-active: #2a2318; /* couleur du label actif            */
-  --font-body: "DM Sans", sans-serif;
+  --white:          #fffff9;
+  --black:          #171414;
+  --dark-green:     #3c3e3a;
+  --light-green:    #d7f2cc;
+  --bar-width:      88px;       /* largeur de la barre latérale      */
+  --bar-bg:         #f5f2ec;    /* fond de la barre                  */
+  --track-color:    #ddd8ce;    /* couleur du rail (inactif)         */
+  --fill-color:     #2a2318;    /* couleur du remplissage actif      */
+  --dot-size:       52px;       /* taille des cercles d'étapes       */
+  --dot-img-size:   32px;       /* taille du PNG dans le cercle      */
+  --label-color:    #8a8070;    /* couleur du texte de label         */
+  --label-active:   #2a2318;    /* couleur du label actif            */
+  --font-body:      'DM Sans', sans-serif;
 }
 
 a {
