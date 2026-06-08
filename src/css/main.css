@@ -409,7 +409,7 @@ footer nav ul li {
   width: var(--dot-size);
   height: var(--dot-size);
   border-radius: 50%;
-  background: #fff;
+  background: #c4c4c4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -495,7 +495,7 @@ main {
 }
 
 #section-2 {
-  height: 400vh; /* assez long pour scroller tranquillement */
+  height: 2 00vh; /* assez long pour scroller tranquillement */
 }
 
 #section-2 .lottie-wrapper {
@@ -510,12 +510,12 @@ main {
   width: 100%;
   height: 100vh;
   pointer-events: none; /* laisse les clics passer à travers */
-  background-image: url("#");
+  background-image: url("../img/Texture-test/scratch.png");
   background-repeat: repeat-y; /* répète verticalement */
   background-position: top center;
   background-size: 100% auto; /* étire la largeur pour remplir l'écran */
   z-index: 1001;
-  opacity: 0.15; /* ajuste l'opacité pour un effet subtil */
+  opacity: 20%; /* ajuste l'opacité pour un effet subtil */
 }
 .overlay-jpg img {
   display: none;
@@ -531,8 +531,20 @@ main {
   font-family: "Instrument Serif", serif;
   font-size: clamp(1.2rem, 2.5vw, 2rem);
   text-align: left;
-  max-width: 600px;
+  max-width: 500px;
   opacity: 0;
   pointer-events: none;
   text-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+#book-text-2 {
+  top: 50%; /* ← ajuste selon ce que tu veux */
+}
+#particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3009;
 }

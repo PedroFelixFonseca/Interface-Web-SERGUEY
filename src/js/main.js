@@ -478,4 +478,48 @@ document.addEventListener("DOMContentLoaded", () => {
       fillEl.style.height = `${self.progress * 100}%`;
     },
   });
+  // ─── PARTICULES ───
+  const particleCanvas = document.getElementById("particles");
+  const pCtx = particleCanvas.getContext("2d");
+  particleCanvas.width = window.innerWidth;
+  particleCanvas.height = window.innerHeight;
+
+  const PARTICLE_COUNT = 60;
+  const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
+    x: Math.random() * particleCanvas.width,
+    y: Math.random() * particleCanvas.height,
+    r: Math.random() * 2 + 0.5, // rayon entre 0.5 et 2.5
+    speedX: (Math.random() - 0.5) * 0.4, // dérive horizontale
+    speedY: (Math.random() - 0.5) * 0.4, // dérive verticale
+    opacity: Math.random() * 0.5 + 0.1, // opacité entre 0.1 et 0.6
+  }));
+
+  function animateParticles() {
+    pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+    particles.forEach((p) => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      // Reboucle de l'autre côté si hors écran
+      if (p.x < 0) p.x = particleCanvas.width;
+      if (p.x > particleCanvas.width) p.x = 0;
+      if (p.y < 0) p.y = particleCanvas.height;
+      if (p.y > particleCanvas.height) p.y = 0;
+
+      pCtx.beginPath();
+      pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      pCtx.fillStyle = `rgba(255, 255, 249, ${p.opacity})`; // couleur --white
+      pCtx.fill();
+    });
+
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
+
+  window.addEventListener("resize", () => {
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+  });
 });
