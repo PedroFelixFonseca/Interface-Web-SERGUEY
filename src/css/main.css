@@ -28,7 +28,7 @@ canvas {
 
 /* Évite le flash blanc entre sections */
 .section {
-  background: #000;
+  background: 000;
 }
 :root {
   --white: #fffff9;
@@ -36,14 +36,14 @@ canvas {
   --dark-green: #3c3e3a;
   --light-green: #d7f2cc;
   --bar-width: 88px; /* largeur de la barre latérale      */
-  --bar-bg: #f5f2ec; /* fond de la barre                  */
-  --track-color: #ddd8ce; /* couleur du rail (inactif)         */
-  --fill-color: #2a2318; /* couleur du remplissage actif      */
+  --bar-bg: #d7f2cc; /* fond de la barre                  */
+  --track-color: #d7f2cc; /* couleur du rail (inactif)         */
+  --fill-color:  #3c3e3a; /* couleur du remplissage actif      */
   --dot-size: 52px; /* taille des cercles d'étapes       */
   --dot-img-size: 32px; /* taille du PNG dans le cercle      */
-  --label-color: #8a8070; /* couleur du texte de label         */
-  --label-active: #2a2318; /* couleur du label actif            */
-  --font-body: "DM Sans", sans-serif;
+  --label-color: #d7f2cc; /* couleur du texte de label         */
+  --label-active: #3c3e3a; /* couleur du label actif            */
+  --font-body: "Instrument Sans", sans-serif;
 }
 
 a {
@@ -56,63 +56,114 @@ video {
   display: block;
 }
 
-.about {
+.buttons-layout {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1000;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-.burger {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-.burger span {
-  display: block;
-  width: 30px;
-  height: 3px;
-  margin: 6px;
-  background: var(--white);
-}
-
-/* Menu */
-.menu {
-  list-style: none;
-  font-family: sans-serif;
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 100%;
-  height: 100vh;
-  background: #1c1c1c;
-  color: var(--white);
+  bottom: 24px;
+  right: 16px;
   display: flex;
-  align-items: right;
-  justify-content: right;
-  z-index: 999;
-  padding: 60px 40px;
+  gap: 12px;
+  z-index: 10000;
 }
 
-.menu ul {
-  list-style: none;
-  padding: 0;
+#buttons{
+  display: inline-flex;
+  padding: 0 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18.5px;
+  background: #D7F2CC;
+  color: #3C3E3A;
+  text-align: center;
+  font-family: "Instrument Serif";
+  font-size: 16px;
+  font-weight: 400;
+  box-shadow: 0px 0px 20px var(--dark-green);
 }
 
-.menu li {
-  margin: 24px 0;
-  font-size: 4rem;
-  text-transform: uppercase;
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 9999;
 }
 
+/* état ouvert */
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+  overflow: hidden;
+}
+.overlay-content {
+  width: 90%;
+  height: 90%;
+  position: relative;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  overflow-y: auto;
+  /* Hide scrollbar - Firefox */
+  scrollbar-width: none;
+  /* Hide scrollbar - IE/Edge */
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar - Chrome, Edge, Safari */
+.overlay-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* animation du contenu quand overlay ouvert */
+.overlay.show .overlay-content {
+  transform: translateY(0);
+  opacity: 1;
+  border-radius: 8px;
+}
+
+.overlay-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: var(--dark-green);
+  color:  var(--light-green);
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+.close:hover {
+  background: var(--light-green);
+  transform: scale(1.1);
+}
 /* INTRO */
 
 /* ─── SCENE WRAPPER ─── */
@@ -147,17 +198,20 @@ video {
   width: min(90vw, 900px);
   max-width: 100%;
   pointer-events: none;
+  color: var(--light-green);
+  font-family: "Instrument Serif", Times, serif;
 }
 
 #title-sayat {
-  font-family: serif;
-  font-weight: 900;
+  font-family: "Instrument Serif", Times, serif;
+  font-weight: 200;
   font-size: clamp(80px, 13vw, 180px);
   color: var(--white);
   line-height: 0.88;
   letter-spacing: -0.08em;
   text-transform: uppercase;
   user-select: none;
+  color: var(--light-green);
 }
 
 #byline {
@@ -165,19 +219,20 @@ video {
   align-items: baseline;
   gap: 0.8em;
   margin-top: 1.2em;
-  font-family: "Cormorant SC", serif;
+  
   font-weight: 300;
   font-size: clamp(9px, 1vw, 14px);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--white);
   user-select: none;
 }
 
 #byline .director {
-  font-weight: 500;
-  font-size: clamp(10px, 1.1vw, 15px);
-  letter-spacing: 0.28em;
+  font-weight: 300;
+  font-size: clamp(9px, 1vw, 14px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+
 }
 
 /* ─── POMEGRANATE ─── */
@@ -207,11 +262,11 @@ video {
 /* ─── CLICK TO START ─── */
 
 #cta {
-  font-family: "Times New Roman", Times, serif;
-  font-weight: 400;
-  letter-spacing: 0.35em;
+  font-family: "Instrument Serif", serif;
+  font-weight: 800;
+  letter-spacing: .35em;
   text-transform: uppercase;
-  color: var(--white);
+  color: var(--light-green);
   animation: pulse 2.8s ease-in-out infinite;
   pointer-events: none;
 }
@@ -238,7 +293,7 @@ video {
 }
 
 #title-pomegranates {
-  font-family: serif;
+  font-family: "Instrument Serif", serif;
   font-weight: 400;
   font-size: clamp(28px, 4.5vw, 68px);
   color: var(--white);
@@ -247,7 +302,6 @@ video {
   line-height: 1.2;
   text-transform: uppercase;
   max-width: 80vw;
-  opacity: 0;
 }
 
 /* lottie-player */
@@ -272,7 +326,7 @@ video {
 
 footer {
   display: flex;
-  height: 50vh;
+  height: 40vh;
   width: 100%;
   padding: 16px 60px;
   justify-content: space-between;
@@ -280,8 +334,8 @@ footer {
   align-content: flex-start;
   flex-shrink: 0;
   flex-wrap: wrap;
-  background-color: var(--dark-green);
-  color: var(--light-green);
+  background-color: var(--light-green);
+  color: var(--dark-green);
 }
 .footer-tittle {
   display: flex;
@@ -289,12 +343,11 @@ footer {
   align-items: flex-start;
   flex-shrink: 0;
   align-items: center;
-  color: var(--light-green);
 }
 
 .footer-tittle h2 {
   text-align: center;
-  font-family: Serif;
+  font-family: "Instrument Serif", serif;
   font-size: 2em;
   font-style: normal;
   font-weight: 400;
@@ -303,12 +356,12 @@ footer {
 
 .footer-tittle h1 {
   text-align: center;
-  font-family: Serif;
+  font-family: "instrument serif", serif;
   font-size: 8rem;
   font-style: normal;
   font-weight: 400;
   line-height: 85.67%; /* 250.57px */
-  letter-spacing: -2px;
+  letter-spacing: -2%;
   text-transform: uppercase;
 }
 
@@ -319,13 +372,12 @@ footer nav ul {
   align-items: flex-end;
   gap: 46px;
   flex-shrink: 0;
-  color: var(--light-green);
 }
 
 footer nav ul li {
   text-align: right;
   font-family: "Instrument Serif";
-  font-size: 500%;
+  font-size: 800%;
   font-style: normal;
   font-weight: 400;
   line-height: 85.67%; /* 108.577px */
@@ -403,7 +455,7 @@ footer nav ul li {
   width: var(--dot-size);
   height: var(--dot-size);
   border-radius: 50%;
-  background: #fff;
+  background:var(--track-color);
   display: flex;
   align-items: center;
   justify-content: center;

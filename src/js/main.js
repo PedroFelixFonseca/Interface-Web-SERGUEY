@@ -1,5 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {motionPathPlugin} from "gsap/MotionPathPlugin";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // ─── BLOCK/UNBLOCK SCROLL — en premier ───
@@ -21,30 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ─── BLOQUER PENDANT L'OVERLAY ───
   blockScroll();
-
-  // ─── BURGER MENU ───
-  const burger = document.querySelector(".burger");
-  const menu = document.querySelector(".menu");
-  let ouvert = false;
-  const tlBurger = gsap.timeline({ paused: true });
-
-  tlBurger.to(menu, { right: 0, duration: 0.5, ease: "power3.inOut" });
-  tlBurger.to(
-    ".burger span:nth-child(1)",
-    { y: 9, rotate: 45, duration: 0.3 },
-    0,
-  );
-  tlBurger.to(".burger span:nth-child(2)", { opacity: 0, duration: 0.3 }, 0);
-  tlBurger.to(
-    ".burger span:nth-child(3)",
-    { y: -9, rotate: -45, duration: 0.3 },
-    0,
-  );
-
-  burger.addEventListener("click", () => {
-    ouvert = !ouvert;
-    ouvert ? tlBurger.play() : tlBurger.reverse();
-  });
 
   // ─── INITIAL ENTRANCE ───
   const tlEntrance = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -327,8 +305,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const STEPS = [
     { id: "section-1", label: "The poet's youth", img: "#" },
-    { id: "section-2", label: "The poet's love", img: "#" },
-    { id: "section-3", label: "The poet at the prince's court", img: "#" },
+    { id: "section-2", label: "The poet at the monastery", img: "#" },
+    { id: "section-3", label: "The poet's love", img: "#" },
     { id: "section-4", label: "Validation", img: "#" },
     { id: "section-5", label: "Livraison", img: "#" },
   ];
