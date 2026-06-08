@@ -123,11 +123,41 @@ document.addEventListener("DOMContentLoaded", () => {
       ease: "power2.inOut",
       delay: 0.8,
       onComplete: () => {
-        unblockScroll(); // ← libère le scroll overlay, le canvas prend le relais
+        unblockScroll();
         document.getElementById("scene").style.display = "none";
       },
     });
   });
+
+  // ─── TEXTE ───
+  const bookText1 = document.getElementById("book-text-1");
+  const bookText2 = document.getElementById("book-text-2");
+
+  function showText(el) {
+    gsap.killTweensOf(el);
+    gsap.fromTo(
+      el,
+      { opacity: 0, y: 30, filter: "blur(8px)" },
+      {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        ease: "power2.out",
+      },
+    );
+  }
+
+  function hideText(el) {
+    gsap.killTweensOf(el);
+    gsap.to(el, {
+      opacity: 0,
+      y: -20,
+      filter: "blur(8px)",
+      duration: 0.8,
+      ease: "power2.in",
+    });
+  }
 
   // ─── ANIMATION 1 — phases (livre) ───
   const totalFrames1 = 105;
@@ -136,7 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let isPlaying1 = false;
   let canvasVisible1 = false;
   let enteredFromTop = false;
-  let offsetX1 = 0; // variable de décalage animable
 
   const frames1 = Array.from({ length: totalFrames1 }, (_, i) => {
     const img = new Image();
@@ -164,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     finalW *= scale;
     finalH *= scale;
-    const x = (canvas1.width - finalW) / 2 + offsetX1; // décalage animé
+    const x = 100; // ← calé à gauche
     const y = (canvas1.height - finalH) / 2;
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
     ctx1.drawImage(img, x, y, finalW, finalH);
@@ -198,6 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
+          hideText(bookText1);
+          hideText(bookText2);
           drawFrame1(0);
         }
       } else {
@@ -206,6 +237,8 @@ document.addEventListener("DOMContentLoaded", () => {
           currentFrame1 = 0;
           isPlaying1 = false;
           unblockScroll();
+          hideText(bookText1);
+          hideText(bookText2);
           drawFrame1(0);
         }
       }
@@ -269,6 +302,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // ─── SCROLL LISTENER ───
   let lastScrollY = window.scrollY;
   let autoScrolling = false;
+  let waitingToHideText2 = false;
+  let hideText2AfterTime = 0;
 
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
@@ -277,33 +312,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (autoScrolling) return;
 
+    if (waitingToHideText2 && Date.now() > hideText2AfterTime) {
+      hideText(bookText2);
+      waitingToHideText2 = false;
+    }
+
     if (canvasVisible1) {
       if (scrollingDown) {
+        enteredFromTop = false;
         if (phase === 0) {
           phase = 1;
-          enteredFromTop = false; // ← fix retour arrière
+          showText(bookText1);
           playTo(50, () => {
-            // Animer le décalage après la première séquence
-            gsap.to(
-              { x: offsetX1 },
-              {
-                x: 300,
-                duration: 0.8,
-                ease: "power2.inOut",
-                onUpdate: function () {
-                  offsetX1 = this.targets()[0].x;
-                  drawFrame1(currentFrame1);
-                },
-              },
-            );
             setTimeout(() => {
               phase = 2;
             }, 200);
           });
         } else if (phase === 2) {
           phase = 3;
-          enteredFromTop = false; // ← fix retour arrière
+          hideText(bookText1);
+          showText(bookText2);
           playTo(104, () => {
+            waitingToHideText2 = true;
+            hideText2AfterTime = Date.now() + 800;
             setTimeout(() => {
               phase = 4;
             }, 200);
@@ -313,6 +344,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!enteredFromTop) {
           if (phase === 4) {
             phase = 5;
+            waitingToHideText2 = false;
+            hideText(bookText2);
+            showText(bookText1);
             playTo(50, () => {
               setTimeout(() => {
                 phase = 6;
@@ -320,6 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           } else if (phase === 6) {
             phase = 0;
+            hideText(bookText1);
+            hideText(bookText2);
             playTo(0, () => {});
           }
         }
@@ -336,6 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+
   // ─── PROGRESSBAR ───
   gsap.registerPlugin(ScrollTrigger);
 
@@ -440,104 +477,5 @@ document.addEventListener("DOMContentLoaded", () => {
     onUpdate: (self) => {
       fillEl.style.height = `${self.progress * 100}%`;
     },
-  });
-
-  // ─── MAGNIFYING GLASS ───
-  const magnifier = document.getElementById("magnifier");
-  const magnifierSize = 150;
-  const zoomLevel = 2.5; // zoom 2.5x
-  let activeMagnifier = null;
-
-  // Ajouter les event listeners aux lottie-wrappers
-  document.querySelectorAll(".lottie-wrapper").forEach((wrapper) => {
-    wrapper.addEventListener("click", (e) => {
-      const canvas = wrapper.querySelector("canvas");
-      if (!canvas) return;
-
-      activeMagnifier = { canvas, wrapper };
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX;
-      const y = e.clientY;
-
-      // Positionner la loupe
-      magnifier.style.left = `${x - magnifierSize / 2}px`;
-      magnifier.style.top = `${y - magnifierSize / 2}px`;
-      magnifier.style.display = "block";
-
-      // Créer un canvas pour la loupe
-      if (!magnifier.canvas) {
-        magnifier.canvas = document.createElement("canvas");
-        magnifier.appendChild(magnifier.canvas);
-      }
-
-      const magCanvas = magnifier.canvas;
-      magCanvas.width = magnifierSize;
-      magCanvas.height = magnifierSize;
-      const magCtx = magCanvas.getContext("2d");
-
-      // Calculer la zone à zoomer
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-      const sourceWidth = magnifierSize / zoomLevel;
-      const sourceHeight = magnifierSize / zoomLevel;
-      const sourceX = clickX - sourceWidth / 2;
-      const sourceY = clickY - sourceHeight / 2;
-
-      // Dessiner la zone zoomée
-      magCtx.drawImage(
-        canvas,
-        sourceX,
-        sourceY,
-        sourceWidth,
-        sourceHeight,
-        0,
-        0,
-        magnifierSize,
-        magnifierSize,
-      );
-    });
-
-    wrapper.addEventListener("mousemove", (e) => {
-      if (!activeMagnifier || activeMagnifier.wrapper !== wrapper) return;
-
-      const canvas = activeMagnifier.canvas;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX;
-      const y = e.clientY;
-
-      // Mettre à jour la position de la loupe
-      magnifier.style.left = `${x - magnifierSize / 2}px`;
-      magnifier.style.top = `${y - magnifierSize / 2}px`;
-
-      // Mettre à jour le contenu de la loupe
-      const magCanvas = magnifier.canvas;
-      const magCtx = magCanvas.getContext("2d");
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-      const sourceWidth = magnifierSize / zoomLevel;
-      const sourceHeight = magnifierSize / zoomLevel;
-      const sourceX = clickX - sourceWidth / 2;
-      const sourceY = clickY - sourceHeight / 2;
-
-      magCtx.clearRect(0, 0, magnifierSize, magnifierSize);
-      magCtx.drawImage(
-        canvas,
-        sourceX,
-        sourceY,
-        sourceWidth,
-        sourceHeight,
-        0,
-        0,
-        magnifierSize,
-        magnifierSize,
-      );
-    });
-
-    wrapper.addEventListener("mouseleave", () => {
-      if (activeMagnifier && activeMagnifier.wrapper === wrapper) {
-        magnifier.style.display = "none";
-        activeMagnifier = null;
-      }
-    });
   });
 });
