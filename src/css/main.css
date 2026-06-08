@@ -65,7 +65,7 @@ video {
 .buttons-layout {
   position: fixed;
   bottom: 24px;
-  right: 16px;
+  right: 40px;
   display: flex;
   gap: 12px;
   z-index: 10000;
@@ -73,7 +73,7 @@ video {
 
 #buttons{
   display: inline-flex;
-  padding: 0 12px;
+  padding: 8px 16px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -84,9 +84,17 @@ video {
   font-family: "Instrument Serif";
   font-size: 16px;
   font-weight: 400;
-  box-shadow: 0px 0px 20px var(--dark-green);
+  border: none;
+  box-shadow: 0px 0px 20px var(--dark-green); 
 }
-
+#buttons:hover {
+  background: #3C3E3A;
+  color: #D7F2CC;
+  box-shadow: 0px 0px 30px var(--light-green);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 .overlay {
   position: fixed;
   inset: 0;
@@ -331,6 +339,8 @@ video {
 /* FOOTER */
 
 footer {
+  position: relative;
+  z-index: 1000;
   display: flex;
   height: 40vh;
   width: 100%;
@@ -342,13 +352,17 @@ footer {
   flex-wrap: wrap;
   background-color: var(--light-green);
   color: var(--dark-green);
+  box-shadow: 0px -100px 100px var(--black);
+  padding-top: 40px;
+  
+
 }
 .footer-tittle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex-shrink: 0;
-  align-items: center;
+  align-items: left;
 }
 
 .footer-tittle h2 {
@@ -376,26 +390,32 @@ footer nav ul {
   width: 280px;
   flex-direction: column;
   align-items: flex-end;
-  gap: 46px;
+  
   flex-shrink: 0;
 }
 
 footer nav ul li {
   text-align: right;
   font-family: "Instrument Serif";
-  font-size: 800%;
+  font-size: 600%;
+  text-decoration:underline 4px solid var(--dark-green);
   font-style: normal;
   font-weight: 400;
   line-height: 85.67%; /* 108.577px */
   letter-spacing: -2.535px;
   text-transform: uppercase;
   list-style: none;
+
+}
+footer nav ul li:hover {
+  scale: 1.02;
+  transition: all 0.4s ease;
 }
 
 /* ─── PROGRESS BAR SIDEBAR ──────────────────────────────────── */
 #progress-bar {
   position: fixed;
-  left: 0;
+  left: 30px;
   top: 0;
   width: var(--bar-width);
   height: 100vh;
@@ -415,20 +435,8 @@ footer nav ul li {
   pointer-events: auto;
 }
 
-.pb-track {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  top: 0;
-  bottom: 0;
-  background: transparent;
-}
-
 .pb-fill {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 0%;
   background: transparent;
@@ -450,18 +458,18 @@ footer nav ul li {
   align-items: center;
   gap: 6px;
   position: relative;
-  flex: 1;
   width: 100%;
   justify-content: center;
   padding: 1rem 0;
   cursor: pointer;
+  
 }
 
 .pb-dot {
   width: var(--dot-size);
   height: var(--dot-size);
   border-radius: 50%;
-  background:var(--track-color);
+  border: 2px dashed var(--track-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -470,6 +478,7 @@ footer nav ul li {
     transform 0.35s ease;
   position: relative;
   z-index: 3;
+  
 }
 
 /* Image PNG dans le cercle */
@@ -491,7 +500,7 @@ footer nav ul li {
 
 /* Label sous le cercle */
 .pb-label {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -507,6 +516,12 @@ footer nav ul li {
   border-color: var(--fill-color);
   background: var(--fill-color);
   transform: scale(1.1);
+   background: #3C3E3A;
+  
+  box-shadow: 0px 0px 30px var(--light-green);
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .pb-step.is-active .pb-dot img,
@@ -524,8 +539,8 @@ footer nav ul li {
 
 /* ─── ÉTAT PASSÉ ─────────────────────────────────────────────── */
 .pb-step.is-past .pb-dot {
-  border-color: var(--fill-color);
-  background: #fff;
+  border-color: none;
+  background: var(--light-green);
 }
 
 .pb-step.is-past .pb-dot img,
