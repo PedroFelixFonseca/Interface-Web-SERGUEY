@@ -398,7 +398,8 @@ footer nav ul li {
   text-align: right;
   font-family: "Instrument Serif";
   font-size: 600%;
-  text-decoration:underline 4px solid var(--dark-green);
+  text-decoration:underline 2px solid var(--dark-green);
+  Text-underline-offset: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 85.67%; /* 108.577px */
