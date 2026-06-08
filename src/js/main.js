@@ -358,8 +358,8 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "section-1", label: "The poet's youth", img: "#" },
     { id: "section-2", label: "The poet at the monastery", img: "#" },
     { id: "section-3", label: "The poet's love", img: "#" },
-    { id: "section-4", label: "Validation", img: "#" },
-    { id: "section-5", label: "Livraison", img: "#" },
+    { id: "section-4", label: "WIP", img: "#" },
+    { id: "section-5", label: "WIP", img: "#" },
   ];
 
   const TRIGGER_START = "top center";
