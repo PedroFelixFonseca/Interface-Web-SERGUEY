@@ -524,7 +524,7 @@ main {
 .book-text {
   position: fixed;
   top: 50%;
-  right: calc(50% - 750px); /* ← décalage de 250px à gauche */
+  right: calc(50% - 50px); /* ← décalage de 250px à gauche */
   transform: translateY(-50%); /* ← plus de translateX */
   z-index: 500;
   color: var(--white);
@@ -546,5 +546,25 @@ main {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 3009;
+  z-index: 0;
+}
+.overlay-2 {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  background-image: url("../img/Texture-test/texture.png");
+  background-repeat: repeat;
+  background-position: top center;
+  background-size: auto;
+  z-index: 1002;
+  opacity: 20%;
+}
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

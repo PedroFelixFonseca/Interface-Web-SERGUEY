@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ─── BLOCK/UNBLOCK SCROLL — en premier ───
+  // ─── BLOCK/UNBLOCK SCROLL ───
   let scrollPosition = 0;
 
   function blockScroll() {
@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, scrollPosition);
   }
 
-  // ─── BLOQUER PENDANT L'OVERLAY ───
   blockScroll();
 
   // ─── BURGER MENU ───
@@ -64,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )
     .to("#cta", { opacity: 0.75, duration: 1.2, ease: "power2.inOut" }, 1.4);
 
-  // ─── CLICK HANDLER (scène intro) ───
+  // ─── CLICK HANDLER ───
   const clickConfig = {
     textFade: 0.7,
     textMoveY: -20,
@@ -159,13 +158,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ─── ANIMATION 1 — phases (livre) ───
+  // ─── ANIMATION 1 ───
   const totalFrames1 = 105;
   let currentFrame1 = 0;
   let phase = 0;
   let isPlaying1 = false;
   let canvasVisible1 = false;
   let enteredFromTop = false;
+  let currentX = 0;
 
   const frames1 = Array.from({ length: totalFrames1 }, (_, i) => {
     const img = new Image();
@@ -177,11 +177,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx1 = canvas1.getContext("2d");
   canvas1.width = window.innerWidth;
   canvas1.height = window.innerHeight;
+  currentX = 200;
 
   function drawFrame1(index) {
     const img = frames1[index];
     if (!img || !img.complete) return;
-    const scale = 1.2;
+    const scale = 1.5;
     const ratio = img.naturalHeight / img.naturalWidth;
     const w = canvas1.width;
     const h = w * ratio;
@@ -193,10 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     finalW *= scale;
     finalH *= scale;
-    const x = 100; // ← calé à gauche
     const y = (canvas1.height - finalH) / 2;
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-    ctx1.drawImage(img, x, y, finalW, finalH);
+    ctx1.drawImage(img, currentX, y, finalW, finalH);
   }
 
   function playTo(target, onComplete) {
@@ -227,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
+          currentX = 200;
           hideText(bookText1);
           hideText(bookText2);
           drawFrame1(0);
@@ -236,6 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
+          currentX = 200;
           unblockScroll();
           hideText(bookText1);
           hideText(bookText2);
@@ -250,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
   observer1.observe(canvas1);
   frames1[0].onload = () => drawFrame1(0);
 
-  // ─── ANIMATION 2 — scroll continu (église) ───
+  // ─── ANIMATION 2 ───
   const totalFrames2 = 119;
   let currentFrame2 = 0;
   let canvasVisible2 = false;
@@ -322,12 +324,28 @@ document.addEventListener("DOMContentLoaded", () => {
         enteredFromTop = false;
         if (phase === 0) {
           phase = 1;
-          showText(bookText1);
-          playTo(50, () => {
-            setTimeout(() => {
-              phase = 2;
-            }, 200);
-          });
+          blockScroll();
+          gsap.to(
+            { x: currentX },
+            {
+              x: 900,
+              duration: 0.9,
+              ease: "power2.inOut",
+              onUpdate: function () {
+                currentX = this.targets()[0].x;
+                drawFrame1(currentFrame1);
+              },
+              onComplete: () => {
+                unblockScroll();
+                showText(bookText1);
+                playTo(50, () => {
+                  setTimeout(() => {
+                    phase = 2;
+                  }, 200);
+                });
+              },
+            },
+          );
         } else if (phase === 2) {
           phase = 3;
           hideText(bookText1);
@@ -410,6 +428,9 @@ document.addEventListener("DOMContentLoaded", () => {
         phase = 0;
         currentFrame1 = 0;
         isPlaying1 = false;
+        currentX = 200;
+        hideText(bookText1);
+        hideText(bookText2);
         unblockScroll();
         drawFrame1(0);
         currentFrame2 = 0;
@@ -478,6 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fillEl.style.height = `${self.progress * 100}%`;
     },
   });
+
   // ─── PARTICULES ───
   const particleCanvas = document.getElementById("particles");
   const pCtx = particleCanvas.getContext("2d");
@@ -488,31 +510,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
     x: Math.random() * particleCanvas.width,
     y: Math.random() * particleCanvas.height,
-    r: Math.random() * 2 + 0.5, // rayon entre 0.5 et 2.5
-    speedX: (Math.random() - 0.5) * 0.4, // dérive horizontale
-    speedY: (Math.random() - 0.5) * 0.4, // dérive verticale
-    opacity: Math.random() * 0.5 + 0.1, // opacité entre 0.1 et 0.6
+    r: Math.random() * 2 + 0.5,
+    speedX: (Math.random() - 0.5) * 0.4,
+    speedY: (Math.random() - 0.5) * 0.4,
+    opacity: Math.random() * 0.5 + 0.1,
   }));
 
   function animateParticles() {
     pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-
     particles.forEach((p) => {
       p.x += p.speedX;
       p.y += p.speedY;
-
-      // Reboucle de l'autre côté si hors écran
       if (p.x < 0) p.x = particleCanvas.width;
       if (p.x > particleCanvas.width) p.x = 0;
       if (p.y < 0) p.y = particleCanvas.height;
       if (p.y > particleCanvas.height) p.y = 0;
-
       pCtx.beginPath();
       pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      pCtx.fillStyle = `rgba(255, 255, 249, ${p.opacity})`; // couleur --white
+      pCtx.fillStyle = `rgba(255, 255, 249, ${p.opacity})`;
       pCtx.fill();
     });
-
     requestAnimationFrame(animateParticles);
   }
 
