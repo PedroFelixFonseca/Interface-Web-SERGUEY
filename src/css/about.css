@@ -17,7 +17,7 @@ box-sizing: border-box;
   --dot-img-size:   32px;       /* taille du PNG dans le cercle      */
   --label-color:    #8a8070;    /* couleur du texte de label         */
   --label-active:   #2a2318;    /* couleur du label actif            */
-  --font-body:      'DM Sans', sans-serif;
+  --font-body:     "Instrument Sans", sans-serif;
 }
 a {
   color: inherit;
@@ -28,11 +28,19 @@ video {
   display: block;
 }
 
+body::-webkit-scrollbar {
+    display: none;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--light-green);
   color: var(--dark-green);
+  scrollbar-width: 0px;
+  -ms-overflow-style: none;
+
 }
+
 
 .about-hero {
   display: flex;
@@ -46,9 +54,9 @@ body {
   padding: 60px 60px;
 }
 .about-hero h1 {
-  font-size: 294px;
+  font-size: 180px;
   letter-spacing: -2%;
-  font-weight: 300;
+  font-weight: 100;
   line-height: 100%; 
   font-family: 'Instrument Serif',serif;
   text-align: left;
@@ -116,84 +124,24 @@ body {
 .projects-1, .projects-2 {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 40px;
+  align-items: top;
+  gap: 46px;
 }
 .projects-1 p, .projects-2 p {
  color: #D7F2CC;
 font-family: "Instrument Sans";
-font-size: 38px;
-font-style: normal;
+font-size: 24px;
 font-weight: 400;
 line-height: normal;
 }
-projects-1 img, .projects-2 img {
-  max-width:600px;
+.projects-1 img{
+  max-width: 25%;
+  
   height: auto;
   object-fit: cover;
 }
-
-
-/* FOOTER */
-
-footer {
-  display: flex;
-  height: 50vh;
-  width: 100%;
-  padding: 16px 60px;
-  justify-content: space-between;
-  align-items: flex-start;
-  align-content: flex-start;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-  background-color: var(--light-green);
-  color: var(--dark-green);
-}
-.footer-tittle {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-shrink: 0;
-  align-items: center;
-}
-
-.footer-tittle h2 {
-  text-align: center;
-  font-family: Serif;
-  font-size: 2em;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.footer-tittle h1 {
-  text-align: center;
-  font-family: Serif;
-  font-size: 8rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 85.67%; /* 250.57px */
-  letter-spacing: -2px;
-  text-transform: uppercase;
-}
-
-footer nav ul {
-  display: flex;
-  width: 280px;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 46px;
-  flex-shrink: 0;
-}
-
-footer nav ul li {
-  text-align: right;
-  font-family: "Instrument Serif";
-  font-size: 500%;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 85.67%; /* 108.577px */
-  letter-spacing: -2.535px;
-  text-transform: uppercase;
-  list-style: none;
+.projects-2 video {
+  max-width: 40vw;
+  height: auto;
+  object-fit: cover; 
 }

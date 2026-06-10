@@ -14,27 +14,34 @@
   </head>
   <canvas id="particles"></canvas>
   <body>
-    <!-- Burger Menu -->
-    <button class="burger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <!-- boutons serguey & contact -->
+    <div class="buttons-layout">
+      <button id="buttons" onclick="openOverlay()">Serguey Parajanov</button>
 
-    <nav class="menu">
-      <ul>
-        <li><a href="#">Accueil</a></li>
-        <li><a href="#">À propos</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
+      <div id="overlay" class="overlay" onclick="closeOverlay()">
+        <div class="overlay-content" onclick="event.stopPropagation()">
+          <button class="close" onclick="closeOverlay()">✕</button>
+          <iframe src="about.html"></iframe>
+        </div>
+      </div>
+
+      <script>
+        function openOverlay() {
+          document.getElementById("overlay").classList.add("show");
+        }
+
+        function closeOverlay() {
+          document.getElementById("overlay").classList.remove("show");
+        }
+      </script>
+    </div>
 
     <!-- SCENE INTRO -->
     <div id="scene">
       <div id="intro">
         <div id="title-sayat">Sayat<br />Nova</div>
         <div id="byline">
-          <span>A film by</span>
+          <span>a Presentation of</span>
           <span class="director">Serguey Parajanov</span>
         </div>
       </div>
@@ -95,11 +102,12 @@
           <canvas id="canvas-1"></canvas>
         </div>
       </section>
-      <section class="section" id="section-2"></section>
+      <section class="section" id="section-2">
+        <div class="lottie-wrapper" id="wrapper-2">
+          <canvas id="canvas-2"></canvas>
+        </div>
+      </section>
       <section class="section" id="section-3"></section>
-      <div class="lottie-wrapper" id="wrapper-2">
-        <canvas id="canvas-2"></canvas>
-      </div>
       <section class="section" id="section-4"></section>
       <section class="section" id="section-5"></section>
     </main>
