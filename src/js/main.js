@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         y: 0,
         filter: "blur(0px)",
         duration: 2.5,
-        delay: 1.5, // ← attend 1.5s avant d'apparaître
+        delay: 0.4, // ← attend 1.5s avant d'apparaître
         ease: "power2.out",
       },
     );
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
       opacity: 0,
       y: -20,
       filter: "blur(8px)",
-      duration: 1.5, // ← était 0.8
+      duration: 0.6, // ← était 0.8
       ease: "power2.in",
     });
   }
@@ -766,3 +766,11 @@ const STEPS = [
     particleCanvas.height = window.innerHeight;
   });
 });
+
+// CURSOR//////----------------------------------
+
+  const cursor = document.querySelector('.cursor');
+  document.addEventListener('mousemove', (e) => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
