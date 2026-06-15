@@ -355,17 +355,11 @@ if (laceRibbon) {
   const laceTl = gsap.timeline({
 
     scrollTrigger: {
-
       trigger: "#section-4",
-
       start: "top top",
-
       end: "+=4500",
-
       scrub: 1,
-
       pin: true,
-
       anticipatePin: 1
     }
   });

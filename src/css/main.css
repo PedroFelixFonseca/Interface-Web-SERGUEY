@@ -704,25 +704,21 @@ html::-webkit-scrollbar {
 
 .lace-column{
     position:absolute;
-
     left:50%;
     top:50%;
-
-    width:420px;
-
-    transform:
-        translate(-50%,-50%);
+    width:60%;
+    transform:translate(-50%,-50%);
 }
 
 #laceRibbon{
     width:100%;
     display:block;
-    opacity:.95;
+    opacity: 75%;
     filter: drop-shadow(0 30px 50px var(--dark-green));
 }
 
 .chapter{
-    color :var(--light-green);
+    color :var(--white);
     position:absolute;
     width:320px;
     opacity:0;
@@ -736,6 +732,7 @@ html::-webkit-scrollbar {
 }
 
 .chapter h2{
+    color:var(--light-green);
     font-family:"Instrument Serif", serif;
     font-size:4rem;
     font-weight:400;
