@@ -1,10 +1,10 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {motionPathPlugin} from "gsap/MotionPathPlugin";
-
+import { motionPathPlugin } from "gsap/MotionPathPlugin";
+gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ─── BLOCK/UNBLOCK SCROLL — en premier ───
+  // ─── BLOCK/UNBLOCK SCROLL ───
   let scrollPosition = 0;
 
   function blockScroll() {
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, scrollPosition);
   }
 
-  // ─── BLOQUER PENDANT L'OVERLAY ───
   blockScroll();
 
   // ─── INITIAL ENTRANCE ───
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )
     .to("#cta", { opacity: 0.75, duration: 1.2, ease: "power2.inOut" }, 1.4);
 
-  // ─── CLICK HANDLER (scène intro) ───
+  // ─── CLICK HANDLER ───
   const clickConfig = {
     textFade: 0.7,
     textMoveY: -20,
@@ -137,13 +136,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ─── ANIMATION 1 — phases (livre) ───
+  // ─── ANIMATION 1 ───
+  // ─── ANIMATION 1 ───
   const totalFrames1 = 105;
   let currentFrame1 = 0;
   let phase = 0;
   let isPlaying1 = false;
   let canvasVisible1 = false;
   let enteredFromTop = false;
+  let currentX = 0;
+  let startX = 0;
+  let endX = 0;
 
   const frames1 = Array.from({ length: totalFrames1 }, (_, i) => {
     const img = new Image();
@@ -156,10 +159,29 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas1.width = window.innerWidth;
   canvas1.height = window.innerHeight;
 
+  function computePositions() {
+    const scale = 1.5;
+    const img = frames1[0];
+    if (!img || !img.complete) return;
+    const ratio = img.naturalHeight / img.naturalWidth;
+    const w = canvas1.width;
+    const h = w * ratio;
+    let finalW = w;
+    let finalH = h;
+    if (h > canvas1.height) {
+      finalH = canvas1.height;
+      finalW = finalH / ratio;
+    }
+    finalW *= scale;
+    startX = (canvas1.width - finalW) / 2; // ← centré
+    endX = canvas1.width * 0.6; // ← vers la droite, ajuste
+    currentX = startX;
+  }
+
   function drawFrame1(index) {
     const img = frames1[index];
     if (!img || !img.complete) return;
-    const scale = 1.2;
+    const scale = 1.5;
     const ratio = img.naturalHeight / img.naturalWidth;
     const w = canvas1.width;
     const h = w * ratio;
@@ -171,10 +193,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     finalW *= scale;
     finalH *= scale;
-    const x = 100; // ← calé à gauche
     const y = (canvas1.height - finalH) / 2;
     ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-    ctx1.drawImage(img, x, y, finalW, finalH);
+    ctx1.drawImage(img, currentX, y, finalW, finalH);
   }
 
   function playTo(target, onComplete) {
@@ -205,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
+          currentX = startX;
           hideText(bookText1);
           hideText(bookText2);
           drawFrame1(0);
@@ -214,6 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
+          currentX = startX;
           unblockScroll();
           hideText(bookText1);
           hideText(bookText2);
@@ -226,9 +249,11 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   observer1.observe(canvas1);
-  frames1[0].onload = () => drawFrame1(0);
-
-  // ─── ANIMATION 2 — scroll continu (église) ───
+  frames1[0].onload = () => {
+    computePositions(); // ← calcule startX et endX une fois l'image chargée
+    drawFrame1(0);
+  };
+  // ─── ANIMATION 2 ───
   const totalFrames2 = 119;
   let currentFrame2 = 0;
   let canvasVisible2 = false;
@@ -262,21 +287,59 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx2.drawImage(img, x, y, finalW, finalH);
   }
 
+  const section2Title = document.querySelector("#section-2 h1");
+
   const observer2 = new IntersectionObserver(
     (entries) => {
       const entry = entries[0];
-      if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-        currentFrame2 = 0;
-        drawFrame2(0);
+      if (entry.isIntersecting) {
+        gsap.to(section2Title, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(section2Title, { opacity: 0, duration: 0.5 });
+        if (entry.boundingClientRect.top > 0) {
+          currentFrame2 = 0;
+          drawFrame2(0);
+        }
       }
       canvasVisible2 = entry.isIntersecting;
     },
-    { threshold: 0.1 },
+    {
+      threshold: 0.5,
+      rootMargin: "-20% 0px -20% 0px",
+    },
   );
 
   observer2.observe(canvas2);
   frames2[0].onload = () => drawFrame2(0);
+  // ─── ANIMATION 3 ───
+  const liquidStreams = document.querySelectorAll(".liquid-stream");
 
+  if (liquidStreams.length) {
+    liquidStreams.forEach((path) => {
+      const delay = parseFloat(path.dataset.delay) || 0;
+      const speed = parseFloat(path.dataset.speed) || 1;
+      const pathLength = path.getTotalLength();
+      path.style.strokeDasharray = pathLength;
+      path.style.strokeDashoffset = pathLength;
+
+      ScrollTrigger.create({
+        trigger: "#section-3",
+        start: "top 80%",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = Math.max(0, (self.progress - delay) * speed);
+          path.style.strokeDashoffset =
+            pathLength - pathLength * Math.min(progress, 1);
+        },
+      });
+    });
+  }
   // ─── SCROLL LISTENER ───
   let lastScrollY = window.scrollY;
   let autoScrolling = false;
@@ -300,12 +363,28 @@ document.addEventListener("DOMContentLoaded", () => {
         enteredFromTop = false;
         if (phase === 0) {
           phase = 1;
-          showText(bookText1);
-          playTo(50, () => {
-            setTimeout(() => {
-              phase = 2;
-            }, 200);
-          });
+          blockScroll();
+          gsap.to(
+            { x: currentX },
+            {
+              x: endX,
+              duration: 0.9,
+              ease: "power2.inOut",
+              onUpdate: function () {
+                currentX = this.targets()[0].x;
+                drawFrame1(currentFrame1);
+              },
+              onComplete: () => {
+                unblockScroll();
+                showText(bookText1);
+                playTo(50, () => {
+                  setTimeout(() => {
+                    phase = 2;
+                  }, 200);
+                });
+              },
+            },
+          );
         } else if (phase === 2) {
           phase = 3;
           hideText(bookText1);
@@ -344,15 +423,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (scrollingDown && currentFrame2 < totalFrames2 - 1) {
         currentFrame2++;
         drawFrame2(currentFrame2);
+
+        // disparition progressive entre frame 10 et 50
+        if (currentFrame2 >= 10 && currentFrame2 <= 100) {
+          const progress = (currentFrame2 - 10) / 70;
+          gsap.set(section2Title, { opacity: 1 - progress });
+        }
       } else if (!scrollingDown && currentFrame2 > 0) {
         currentFrame2--;
         drawFrame2(currentFrame2);
+
+        // réapparition progressive si on revient en arrière
+        if (currentFrame2 >= 10 && currentFrame2 <= 100) {
+          const progress = (currentFrame2 - 10) / 70;
+          gsap.set(section2Title, { opacity: 1 - progress });
+        }
+        if (currentFrame2 < 10) {
+          gsap.set(section2Title, { opacity: 1 });
+        }
       }
     }
   });
 
   // ─── PROGRESSBAR ───
-  gsap.registerPlugin(ScrollTrigger);
 
   const STEPS = [
     { id: "section-1", label: "The poet's youth", img: "#" },
@@ -381,13 +474,15 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <span class="pb-label">${step.label}</span>
     `;
-
     el.addEventListener("click", () => {
       const target = document.getElementById(step.id);
       if (target) {
         phase = 0;
         currentFrame1 = 0;
         isPlaying1 = false;
+        currentX = startX; // ← était (canvas1.width - finalW) / 2
+        hideText(bookText1);
+        hideText(bookText2);
         unblockScroll();
         drawFrame1(0);
         currentFrame2 = 0;
@@ -399,7 +494,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
       }
     });
-
     stepsContainer.appendChild(el);
   });
 
@@ -456,6 +550,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fillEl.style.height = `${self.progress * 100}%`;
     },
   });
+
   // ─── PARTICULES ───
   const particleCanvas = document.getElementById("particles");
   const pCtx = particleCanvas.getContext("2d");
@@ -466,31 +561,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const particles = Array.from({ length: PARTICLE_COUNT }, () => ({
     x: Math.random() * particleCanvas.width,
     y: Math.random() * particleCanvas.height,
-    r: Math.random() * 2 + 0.5, // rayon entre 0.5 et 2.5
-    speedX: (Math.random() - 0.5) * 0.4, // dérive horizontale
-    speedY: (Math.random() - 0.5) * 0.4, // dérive verticale
-    opacity: Math.random() * 0.5 + 0.1, // opacité entre 0.1 et 0.6
+    r: Math.random() * 2 + 0.5,
+    speedX: (Math.random() - 0.5) * 0.4,
+    speedY: (Math.random() - 0.5) * 0.4,
+    opacity: Math.random() * 0.5 + 0.1,
   }));
 
   function animateParticles() {
     pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-
     particles.forEach((p) => {
       p.x += p.speedX;
       p.y += p.speedY;
-
-      // Reboucle de l'autre côté si hors écran
       if (p.x < 0) p.x = particleCanvas.width;
       if (p.x > particleCanvas.width) p.x = 0;
       if (p.y < 0) p.y = particleCanvas.height;
       if (p.y > particleCanvas.height) p.y = 0;
-
       pCtx.beginPath();
       pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      pCtx.fillStyle = `rgba(255, 255, 249, ${p.opacity})`; // couleur --white
+      pCtx.fillStyle = `rgba(255, 255, 249, ${p.opacity})`;
       pCtx.fill();
     });
-
     requestAnimationFrame(animateParticles);
   }
 
@@ -500,5 +590,4 @@ document.addEventListener("DOMContentLoaded", () => {
     particleCanvas.width = window.innerWidth;
     particleCanvas.height = window.innerHeight;
   });
-
 });

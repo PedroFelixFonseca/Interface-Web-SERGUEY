@@ -12,34 +12,27 @@
       rel="stylesheet"
     />
   </head>
-  <canvas id="particles"></canvas>
   <body>
-    <!-- boutons serguey & contact -->
-      <div class="buttons-layout">
-    <button id="buttons" onclick="openOverlay()">Serguey Parajanov</button>
+    <canvas id="particles"></canvas>
 
-<div id="overlay" class="overlay" onclick="closeOverlay()">
-  <div class="overlay-content" onclick="event.stopPropagation()">
-    <button class="close" onclick="closeOverlay()">✕</button>
-
-    <iframe src="about.html"></iframe>
-  </div>
-</div>
-
-<script>
-function openOverlay() {
-  document.getElementById("overlay").classList.add("show");
-}
-
-function closeOverlay() {
-  document.getElementById("overlay").classList.remove("show");
-}
-</script>
+    <div class="buttons-layout">
+      <button id="buttons" onclick="openOverlay()">Serguey Parajanov</button>
+      <div id="overlay" class="overlay" onclick="closeOverlay()">
+        <div class="overlay-content" onclick="event.stopPropagation()">
+          <button class="close" onclick="closeOverlay()">✕</button>
+          <iframe src="about.html"></iframe>
+        </div>
       </div>
+      <script>
+        function openOverlay() {
+          document.getElementById("overlay").classList.add("show");
+        }
+        function closeOverlay() {
+          document.getElementById("overlay").classList.remove("show");
+        }
+      </script>
+    </div>
 
-      
-      
-    <!-- SCENE INTRO -->
     <div id="scene">
       <div id="intro">
         <div id="title-sayat">Sayat<br />Nova</div>
@@ -48,27 +41,23 @@ function closeOverlay() {
           <span class="director">Serguey Parajanov</span>
         </div>
       </div>
-      <div id="pomegranate-wrap">
-        <img id="pomegranate"src="#"alt="pomegranate"/>
-      </div>
+      <div id="pomegranate-wrap"></div>
       <div id="cta">Click to start</div>
       <div id="reveal">
         <div id="title-pomegranates">The Color of<br />Pomegranates</div>
       </div>
     </div>
 
-    <!-- PROGRESS BAR -->
     <nav id="progress-bar" aria-label="Progression de la page">
       <div class="pb-track">
         <div class="pb-fill" id="pb-fill"></div>
       </div>
       <div class="pb-steps" id="pb-steps"></div>
     </nav>
-    <div class="overlay-jpg">
-      <img src="img/Texture-test/scratch.png" alt="overlay" />
-    </div>
 
-    <!-- MAIN CONTENT -->
+    <div class="overlay-jpg"></div>
+    <div class="overlay-2"></div>
+
     <div class="book-text" id="book-text-1">
       <p>
         Sayat Nova was born in 1712 in Tiflis, into a family of Armenian
@@ -92,27 +81,179 @@ function closeOverlay() {
         displayed a keen sensitivity to words and sounds.
       </p>
     </div>
+
     <main id="main-content">
       <section class="section" id="section-1">
         <div class="lottie-wrapper" id="wrapper-1">
           <canvas id="canvas-1"></canvas>
         </div>
       </section>
+
       <section class="section" id="section-2">
         <div class="lottie-wrapper" id="wrapper-2">
           <canvas id="canvas-2"></canvas>
         </div>
+        <h1>The Poet at the Monastery</h1>
       </section>
+
       <section class="section" id="section-3">
-       
+        <div id="grenade-scene">
+          <img id="grenade-img" src="img/m.png" alt="grenade" />
+          <svg
+            id="liquid-svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          ></svg>
+          <svg
+            id="liquid-svg"
+            viewBox="0 0 600 900"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <!-- ─── CENTRE ─── -->
+            <path
+              class="liquid-stream"
+              data-delay="0"
+              data-speed="2"
+              d="M300,0 C296,150 304,300 299,450 C294,600 301,750 300,900"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="22"
+              stroke-linecap="round"
+              opacity="1"
+            />
+
+            <!-- ─── PROCHES ─── -->
+            <path
+              class="liquid-stream"
+              data-delay="0.03"
+              data-speed="1.6"
+              d="M275,0 C271,130 278,265 274,400 C270,530 275,650 274,800"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="10"
+              stroke-linecap="round"
+              opacity="0.85"
+            />
+
+            <path
+              class="liquid-stream"
+              data-delay="0.03"
+              data-speed="1.6"
+              d="M325,0 C329,130 322,265 326,400 C330,530 325,650 326,800"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="10"
+              stroke-linecap="round"
+              opacity="0.85"
+            />
+
+            <!-- ─── MOYENS ─── -->
+            <path
+              class="liquid-stream"
+              data-delay="0.08"
+              data-speed="1.2"
+              d="M245,0 C241,110 248,220 244,335 C240,450 245,550 244,670"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="5"
+              stroke-linecap="round"
+              opacity="0.6"
+            />
+
+            <path
+              class="liquid-stream"
+              data-delay="0.08"
+              data-speed="1.2"
+              d="M355,0 C359,110 352,220 356,335 C360,450 355,550 356,670"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="5"
+              stroke-linecap="round"
+              opacity="0.6"
+            />
+
+            <!-- ─── ÉLOIGNÉS ─── -->
+            <path
+              class="liquid-stream"
+              data-delay="0.14"
+              data-speed="0.8"
+              d="M210,0 C206,90 212,180 208,270 C204,365 209,445 208,540"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="3"
+              stroke-linecap="round"
+              opacity="0.4"
+            />
+
+            <path
+              class="liquid-stream"
+              data-delay="0.14"
+              data-speed="0.8"
+              d="M390,0 C394,90 388,180 392,270 C396,365 391,445 392,540"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="3"
+              stroke-linecap="round"
+              opacity="0.4"
+            />
+
+            <!-- ─── BORDS ─── -->
+            <path
+              class="liquid-stream"
+              data-delay="0.22"
+              data-speed="0.5"
+              d="M170,0 C167,70 172,140 169,210 C166,285 170,345 169,410"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              opacity="0.25"
+            />
+
+            <path
+              class="liquid-stream"
+              data-delay="0.22"
+              data-speed="0.5"
+              d="M430,0 C433,70 428,140 431,210 C434,285 430,345 431,410"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              opacity="0.25"
+            />
+
+            <!-- ─── EXTRÊMES ─── -->
+            <path
+              class="liquid-stream"
+              data-delay="0.3"
+              data-speed="0.3"
+              d="M130,0 C127,55 132,110 129,165 C126,225 130,275 129,325"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="1"
+              stroke-linecap="round"
+              opacity="0.15"
+            />
+
+            <path
+              class="liquid-stream"
+              data-delay="0.3"
+              data-speed="0.3"
+              d="M470,0 C473,55 468,110 471,165 C474,225 470,275 471,325"
+              fill="none"
+              stroke="#8B0000"
+              stroke-width="1"
+              stroke-linecap="round"
+              opacity="0.15"
+            />
+          </svg>
+        </div>
       </section>
-      
       <section class="section" id="section-4"></section>
       <section class="section" id="section-5"></section>
     </main>
 
     <include src="./components/footer.html"></include>
-
     <script src="js/main.js" type="module"></script>
   </body>
 </html>
