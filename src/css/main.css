@@ -875,7 +875,7 @@ html::-webkit-scrollbar {
   top: 82%;
 }
 
-/* #section-4 {
+#section-5 {
   font-family: "Instrument Serif", serif;
   text-align: center;
   display: flex;
@@ -883,7 +883,7 @@ html::-webkit-scrollbar {
   align-items: center;
   margin: 40vh;
 }
-#section-4 h2 {
+#section-5 h2 {
   color: var(--light-green);
   font-size: 4rem;
   font-weight: 400;
@@ -891,9 +891,9 @@ html::-webkit-scrollbar {
   align-items: center;
 }
 
-#section-4 p {
+#section-5 p {
   color: var(--white);
   font-size: 1.2rem;
   line-height: 1.7;
   max-width: 600px;
-} */
+}
