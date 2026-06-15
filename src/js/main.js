@@ -520,30 +520,10 @@ document.addEventListener("DOMContentLoaded", () => {
       0.5,
     );
 
-    laceTl.to(
-      ".chapter-4",
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.25,
-      },
-      0.7,
-    );
-
-    laceTl.to(
-      ".chapter-5",
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.25,
-      },
-      0.9,
-    );
-
     // léger flottement permanent
 
     gsap.to("#laceRibbon", {
-      rotation: 1,
+      rotation: 4,
       duration: 4,
       repeat: -1,
       yoyo: true,
