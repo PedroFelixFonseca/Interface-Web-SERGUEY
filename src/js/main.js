@@ -271,6 +271,7 @@ if (headerTitle) {
     drawFrame1(0);
   };
   // ─── ANIMATION 2 ───
+  // ─── ANIMATION 2 ───
   const totalFrames2 = 119;
   let currentFrame2 = 0;
   let canvasVisible2 = false;
@@ -303,21 +304,85 @@ if (headerTitle) {
     ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     ctx2.drawImage(img, x, y, finalW, finalH);
   }
+  gsap.set("#s2-title", { opacity: 0 });
+  const s2text1 = document.getElementById("s2-text-1");
+  const s2text2 = document.getElementById("s2-text-2");
 
-  const section2Title = document.querySelector("#section-2 h1");
+  ScrollTrigger.create({
+    trigger: document.getElementById("s2-anchor-1"),
+    start: "top 80%",
+    end: "bottom 20%",
+    onEnter: () =>
+      gsap.to(s2text1, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        ease: "power2.out",
+      }),
+    onLeave: () =>
+      gsap.to(s2text1, {
+        opacity: 0,
+        y: -20,
+        filter: "blur(8px)",
+        duration: 0.8,
+      }),
+    onEnterBack: () =>
+      gsap.to(s2text1, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+      }),
+    onLeaveBack: () =>
+      gsap.to(s2text1, {
+        opacity: 0,
+        y: 20,
+        filter: "blur(8px)",
+        duration: 0.8,
+      }),
+  });
+
+  ScrollTrigger.create({
+    trigger: document.getElementById("s2-anchor-2"),
+    start: "top 80%",
+    end: "bottom 20%",
+    onEnter: () =>
+      gsap.to(s2text2, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        ease: "power2.out",
+      }),
+    onLeave: () =>
+      gsap.to(s2text2, {
+        opacity: 0,
+        y: -20,
+        filter: "blur(8px)",
+        duration: 0.8,
+      }),
+    onEnterBack: () =>
+      gsap.to(s2text2, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+      }),
+    onLeaveBack: () =>
+      gsap.to(s2text2, {
+        opacity: 0,
+        y: 20,
+        filter: "blur(8px)",
+        duration: 0.8,
+      }),
+  });
 
   const observer2 = new IntersectionObserver(
     (entries) => {
       const entry = entries[0];
-      if (entry.isIntersecting) {
-        gsap.to(section2Title, {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power2.out",
-        });
-      } else {
-        gsap.to(section2Title, { opacity: 0, duration: 0.5 });
+      if (!entry.isIntersecting) {
+        gsap.set("#s2-title", { opacity: 0 });
         if (entry.boundingClientRect.top > 0) {
           currentFrame2 = 0;
           drawFrame2(0);
@@ -325,10 +390,7 @@ if (headerTitle) {
       }
       canvasVisible2 = entry.isIntersecting;
     },
-    {
-      threshold: 0.5,
-      rootMargin: "-20% 0px -20% 0px",
-    },
+    { threshold: 0.1 },
   );
 
   observer2.observe(canvas2);
@@ -472,6 +534,7 @@ if (laceRibbon) {
 
 
   // ─── SCROLL LISTENER ───
+  let s2TitleVisible = false;
   let lastScrollY = window.scrollY;
   let autoScrolling = false;
   let waitingToHideText2 = false;
@@ -549,28 +612,45 @@ if (laceRibbon) {
         }
       }
     }
-
     if (canvasVisible2) {
       if (scrollingDown && currentFrame2 < totalFrames2 - 1) {
         currentFrame2++;
         drawFrame2(currentFrame2);
-
-        // disparition progressive entre frame 10 et 50
-        if (currentFrame2 >= 10 && currentFrame2 <= 100) {
-          const progress = (currentFrame2 - 10) / 70;
-          gsap.set(section2Title, { opacity: 1 - progress });
+        if (currentFrame2 === 10 && !s2TitleVisible) {
+          s2TitleVisible = true;
+          gsap.to("#s2-title", { opacity: 1, duration: 2, ease: "power1.out" });
+        }
+        if (currentFrame2 === 60 && s2TitleVisible) {
+          s2TitleVisible = false;
+          gsap.to("#s2-title", {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.in",
+          });
         }
       } else if (!scrollingDown && currentFrame2 > 0) {
         currentFrame2--;
         drawFrame2(currentFrame2);
-
-        // réapparition progressive si on revient en arrière
-        if (currentFrame2 >= 10 && currentFrame2 <= 100) {
-          const progress = (currentFrame2 - 10) / 70;
-          gsap.set(section2Title, { opacity: 1 - progress });
+        if (currentFrame2 === 59 && !s2TitleVisible) {
+          s2TitleVisible = true;
+          gsap.to("#s2-title", { opacity: 1, duration: 2, ease: "power1.out" });
         }
-        if (currentFrame2 < 10) {
-          gsap.set(section2Title, { opacity: 1 });
+        if (currentFrame2 === 9 && s2TitleVisible) {
+          s2TitleVisible = false;
+          gsap.to("#s2-title", {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.in",
+          });
+        }
+      } else if (!scrollingDown && currentFrame2 === 0) {
+        if (s2TitleVisible) {
+          s2TitleVisible = false;
+          gsap.to("#s2-title", {
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.in",
+          });
         }
       }
     }
