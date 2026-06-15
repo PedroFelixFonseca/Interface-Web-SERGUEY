@@ -271,7 +271,6 @@ if (headerTitle) {
     drawFrame1(0);
   };
   // ─── ANIMATION 2 ───
-  // ─── ANIMATION 2 ───
   const totalFrames2 = 119;
   let currentFrame2 = 0;
   let canvasVisible2 = false;
@@ -304,49 +303,44 @@ if (headerTitle) {
     ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
     ctx2.drawImage(img, x, y, finalW, finalH);
   }
-  gsap.set("#s2-title", { opacity: 0 });
+  gsap.set("#s2-title", { opacity: 0, filter: "blur(8px)" });
   const s2text1 = document.getElementById("s2-text-1");
   const s2text2 = document.getElementById("s2-text-2");
 
   ScrollTrigger.create({
-    trigger: document.getElementById("s2-anchor-1"),
-    start: "top 80%",
-    end: "bottom 20%",
+    trigger: "#section-2",
+    start: "top 40%", // ← déclenche plus tôt
+    end: "bottom 60%", // ← disparaît plus tôt
     onEnter: () =>
-      gsap.to(s2text1, {
+      gsap.to("#s2-title", {
         opacity: 1,
-        y: 0,
         filter: "blur(0px)",
         duration: 1.2,
         ease: "power2.out",
       }),
     onLeave: () =>
-      gsap.to(s2text1, {
+      gsap.to("#s2-title", {
         opacity: 0,
-        y: -20,
         filter: "blur(8px)",
         duration: 0.8,
       }),
     onEnterBack: () =>
-      gsap.to(s2text1, {
+      gsap.to("#s2-title", {
         opacity: 1,
-        y: 0,
         filter: "blur(0px)",
         duration: 1.2,
       }),
     onLeaveBack: () =>
-      gsap.to(s2text1, {
+      gsap.to("#s2-title", {
         opacity: 0,
-        y: 20,
         filter: "blur(8px)",
         duration: 0.8,
       }),
   });
-
   ScrollTrigger.create({
     trigger: document.getElementById("s2-anchor-2"),
     start: "top 80%",
-    end: "bottom 20%",
+    end: "bottom 100%",
     onEnter: () =>
       gsap.to(s2text2, {
         opacity: 1,
@@ -394,147 +388,172 @@ if (headerTitle) {
   );
 
   observer2.observe(canvas2);
+  gsap.set("#s2-title", { opacity: 0, y: 30, filter: "blur(8px)" });
+
+  ScrollTrigger.create({
+    trigger: "#section-2",
+    start: "top 60%",
+    end: "bottom 40%",
+    onEnter: () =>
+      gsap.to("#s2-title", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+        ease: "power2.out",
+      }),
+    onLeave: () =>
+      gsap.to("#s2-title", {
+        opacity: 0,
+        y: -20,
+        filter: "blur(8px)",
+        duration: 0.8,
+      }),
+    onEnterBack: () =>
+      gsap.to("#s2-title", {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 1.2,
+      }),
+    onLeaveBack: () =>
+      gsap.to("#s2-title", {
+        opacity: 0,
+        y: 20,
+        filter: "blur(8px)",
+        duration: 0.8,
+      }),
+  });
   frames2[0].onload = () => drawFrame2(0);
-  // ─── ANIMATION 3 ───
-  const liquidStreams = document.querySelectorAll(".liquid-stream");
+  // ─── ANIMATION S2 ARTICLES ───
+  document.querySelectorAll(".S2").forEach((article) => {
+    gsap.set(article, { opacity: 0, y: 60 });
+    ScrollTrigger.create({
+      trigger: article,
+      start: "top 80%",
+      onEnter: () =>
+        gsap.to(article, {
+          opacity: 1,
+          y: 0,
+          duration: 0.25,
+          ease: "power2.out",
+        }),
+      onLeaveBack: () =>
+        gsap.to(article, { opacity: 0, y: 60, duration: 0.25 }),
+    });
+  });
+  // ─────────────────────────────
+  // SECTION 4 — LACE STORY
+  // ─────────────────────────────
 
-  if (liquidStreams.length) {
-    liquidStreams.forEach((path) => {
-      const delay = parseFloat(path.dataset.delay) || 0;
-      const speed = parseFloat(path.dataset.speed) || 1;
-      const pathLength = path.getTotalLength();
-      path.style.strokeDasharray = pathLength;
-      path.style.strokeDashoffset = pathLength;
+  const laceRibbon = document.getElementById("laceRibbon");
 
-      ScrollTrigger.create({
-        trigger: "#section-3",
-        start: "top 80%",
-        end: "bottom bottom",
+  if (laceRibbon) {
+    gsap.set(".chapter", {
+      opacity: 0,
+      y: 60,
+    });
+
+    const laceTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#section-4",
+        start: "top top",
+        end: "+=4500",
         scrub: 1,
-        onUpdate: (self) => {
-          const progress = Math.max(0, (self.progress - delay) * speed);
-          path.style.strokeDashoffset =
-            pathLength - pathLength * Math.min(progress, 1);
-        },
-      });
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+
+    laceTl.fromTo(
+      "#laceRibbon",
+
+      {
+        clipPath: "inset(100% 0 0 0)",
+      },
+
+      {
+        clipPath: "inset(0% 0 0 0)",
+        duration: 1,
+      },
+
+      0,
+    );
+
+    laceTl.to(
+      "#laceRibbon",
+
+      {
+        y: -180,
+        duration: 1,
+      },
+
+      0,
+    );
+
+    laceTl.to(
+      ".chapter-1",
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.25,
+      },
+      0.1,
+    );
+
+    laceTl.to(
+      ".chapter-2",
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.25,
+      },
+      0.3,
+    );
+
+    laceTl.to(
+      ".chapter-3",
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.25,
+      },
+      0.5,
+    );
+
+    laceTl.to(
+      ".chapter-4",
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.25,
+      },
+      0.7,
+    );
+
+    laceTl.to(
+      ".chapter-5",
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.25,
+      },
+      0.9,
+    );
+
+    // léger flottement permanent
+
+    gsap.to("#laceRibbon", {
+      rotation: 1,
+      duration: 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      transformOrigin: "center center",
     });
   }
-// ─────────────────────────────
-// SECTION 4 — LACE STORY
-// ─────────────────────────────
-
-const laceRibbon = document.getElementById("laceRibbon");
-
-if (laceRibbon) {
-
-  gsap.set(".chapter", {
-    opacity: 0,
-    y: 60
-  });
-
-  const laceTl = gsap.timeline({
-
-    scrollTrigger: {
-      trigger: "#section-4",
-      start: "top top",
-      end: "+=4500",
-      scrub: 1,
-      pin: true,
-      anticipatePin: 1
-    }
-  });
-
-  laceTl.fromTo(
-    "#laceRibbon",
-
-    {
-      clipPath: "inset(100% 0 0 0)"
-    },
-
-    {
-      clipPath: "inset(0% 0 0 0)",
-      duration: 1
-    },
-
-    0
-  );
-
-  laceTl.to(
-    "#laceRibbon",
-
-    {
-      y: -180,
-      duration: 1
-    },
-
-    0
-  );
-
-  laceTl.to(
-    ".chapter-1",
-    {
-      opacity: 1,
-      y: 0,
-      duration: .25
-    },
-    0.10
-  );
-
-  laceTl.to(
-    ".chapter-2",
-    {
-      opacity: 1,
-      y: 0,
-      duration: .25
-    },
-    0.30
-  );
-
-  laceTl.to(
-    ".chapter-3",
-    {
-      opacity: 1,
-      y: 0,
-      duration: .25
-    },
-    0.50
-  );
-
-  laceTl.to(
-    ".chapter-4",
-    {
-      opacity: 1,
-      y: 0,
-      duration: .25
-    },
-    0.70
-  );
-
-  laceTl.to(
-    ".chapter-5",
-    {
-      opacity: 1,
-      y: 0,
-      duration: .25
-    },
-    0.90
-  );
-
-  // léger flottement permanent
-
-  gsap.to("#laceRibbon", {
-    rotation: 1,
-    duration: 4,
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut",
-    transformOrigin: "center center"
-  });
-}
-
 
   // ─── SCROLL LISTENER ───
-  let s2TitleVisible = false;
   let lastScrollY = window.scrollY;
   let autoScrolling = false;
   let waitingToHideText2 = false;
@@ -612,50 +631,17 @@ if (laceRibbon) {
         }
       }
     }
+
     if (canvasVisible2) {
       if (scrollingDown && currentFrame2 < totalFrames2 - 1) {
         currentFrame2++;
         drawFrame2(currentFrame2);
-        if (currentFrame2 === 10 && !s2TitleVisible) {
-          s2TitleVisible = true;
-          gsap.to("#s2-title", { opacity: 1, duration: 2, ease: "power1.out" });
-        }
-        if (currentFrame2 === 60 && s2TitleVisible) {
-          s2TitleVisible = false;
-          gsap.to("#s2-title", {
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.in",
-          });
-        }
       } else if (!scrollingDown && currentFrame2 > 0) {
         currentFrame2--;
         drawFrame2(currentFrame2);
-        if (currentFrame2 === 59 && !s2TitleVisible) {
-          s2TitleVisible = true;
-          gsap.to("#s2-title", { opacity: 1, duration: 2, ease: "power1.out" });
-        }
-        if (currentFrame2 === 9 && s2TitleVisible) {
-          s2TitleVisible = false;
-          gsap.to("#s2-title", {
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.in",
-          });
-        }
-      } else if (!scrollingDown && currentFrame2 === 0) {
-        if (s2TitleVisible) {
-          s2TitleVisible = false;
-          gsap.to("#s2-title", {
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.in",
-          });
-        }
       }
     }
   });
-
   // ─── PROGRESSBAR ───
 
   const STEPS = [

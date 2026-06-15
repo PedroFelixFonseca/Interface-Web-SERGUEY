@@ -366,7 +366,7 @@ video {
 }
 
 .lottie-wrapper {
-  height: 400vh;
+  height: 200vh;
   position: relative;
   overflow: visible;
 }
@@ -660,7 +660,7 @@ main {
   background-position: top center;
   background-size: auto;
   z-index: 1002;
-  opacity: 20%;
+  opacity: 40%;
 }
 html {
   scrollbar-width: none; /* Firefox */
@@ -668,33 +668,6 @@ html {
 
 html::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
-}
-
-#grenade-scene {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* ← centre verticalement */
-}
-
-#grenade-img {
-  width: 200px;
-  height: auto;
-  position: relative;
-  z-index: 2;
-}
-
-#liquid-svg {
-  position: absolute;
-  top: 30%; /* ← décale vers le bas, ajuste cette valeur */
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
 }
 
 #section-2 {
@@ -744,117 +717,141 @@ html::-webkit-scrollbar {
   transform: translateY(-50%);
   text-align: center;
   color: white;
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2rem, 5vw, 5rem);
   opacity: 0;
   pointer-events: none;
   z-index: 200;
   margin: -50vh 0;
+  color: var(--light-green);
+  font-family: "Instrument Serif", serif;
+  font-size: 4rem;
+  font-weight: 400;
+  margin: 10px 0;
 }
-.s2-paragraphs {
+
+.S2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--white);
+  max-width: 30%;
+}
+
+.S2 p {
+  color: white;
+  font-family: "Instrument Serif", serif;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.left {
+  margin-right: auto;
+  margin-left: 15%;
+}
+
+.right {
+  margin-left: auto;
+  text-align: right;
+  margin-right: 10%;
+}
+
+.S2 span {
+  color: var(--light-green);
+  letter-spacing: 0.3em;
+}
+
+.S2 h2 {
+  color: var(--light-green);
+  font-family: "Instrument Serif", serif;
+  font-size: 4rem;
+  font-weight: 400;
+  margin: 10px 0;
+}
+
+.s2-articles {
   display: flex;
   flex-direction: column;
   gap: 8vh;
-  padding: 8vh 5%;
+  padding: 8vh 10%;
+  background: #000;
+}
+#section-4 {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.s2-p-left {
-  color: white;
+.lace-story {
+  width: 100%;
+  height: 100%;
+}
+
+.sticky-scene {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.lace-column {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60%;
+  transform: translate(-50%, -50%);
+}
+
+#laceRibbon {
+  width: 100%;
+  display: block;
+  opacity: 75%;
+  filter: drop-shadow(0 30px 50px var(--dark-green));
+}
+
+.chapter {
+  color: var(--white);
+  position: absolute;
+  width: 320px;
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.chapter span {
+  color: var(--light-green);
+  letter-spacing: 0.3em;
+}
+
+.chapter h2 {
+  color: var(--light-green);
   font-family: "Instrument Serif", serif;
-  font-size: clamp(1rem, 2.5vw, 2rem);
-  max-width: 500px;
-  align-self: flex-start;
+  font-size: 4rem;
+  font-weight: 400;
+  margin: 10px 0;
 }
 
-.s2-p-right {
-  color: white;
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(1rem, 2.5vw, 2rem);
-  max-width: 500px;
-  align-self: flex-end;
-  text-align: right;
+.chapter p {
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
-#section-4{
-    position:relative;
-    height:100vh;
-    overflow:hidden;
+.chapter-1 {
+  left: 10%;
+  top: 10%;
 }
 
-.lace-story{
-    width:100%;
-    height:100%;
+.chapter-2 {
+  right: 10%;
+  top: 25%;
 }
 
-.sticky-scene{
-    width:100%;
-    height:100%;
-    position:relative;
+.chapter-3 {
+  left: 10%;
+  top: 45%;
 }
 
-.lace-column{
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:60%;
-    transform:translate(-50%,-50%);
+.chapter-4 {
+  right: 10%;
+  top: 65%;
 }
 
-#laceRibbon{
-    width:100%;
-    display:block;
-    opacity: 75%;
-    filter: drop-shadow(0 30px 50px var(--dark-green));
-}
-
-.chapter{
-    color :var(--white);
-    position:absolute;
-    width:320px;
-    opacity:0;
-    transform:
-        translateY(50px);
-}
-
-.chapter span{
-    color:var(--light-green);
-    letter-spacing:.3em;
-}
-
-.chapter h2{
-    color:var(--light-green);
-    font-family:"Instrument Serif", serif;
-    font-size:4rem;
-    font-weight:400;
-    margin:10px 0;
-}
-
-.chapter p{
-    font-size:1rem;
-    line-height:1.7;
-}
-
-.chapter-1{
-    left:10%;
-    top:10%;
-}
-
-.chapter-2{
-    right:10%;
-    top:25%;
-}
-
-.chapter-3{
-    left:10%;
-    top:45%;
-}
-
-.chapter-4{
-    right:10%;
-    top:65%;
-}
-
-.chapter-5{
-    left:10%;
-    top:82%;
+.chapter-5 {
+  left: 10%;
+  top: 82%;
 }
