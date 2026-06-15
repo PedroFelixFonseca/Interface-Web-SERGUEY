@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {motionPathPlugin} from "gsap/MotionPathPlugin";
-
+import { motionPathPlugin } from "gsap/MotionPathPlugin";
+gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener("DOMContentLoaded", () => {
   // ─── BLOCK/UNBLOCK SCROLL ───
@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx1 = canvas1.getContext("2d");
   canvas1.width = window.innerWidth;
   canvas1.height = window.innerHeight;
-  currentX = 200;
+  currentX = 500;
 
   function drawFrame1(index) {
     const img = frames1[index];
@@ -279,6 +279,30 @@ document.addEventListener("DOMContentLoaded", () => {
   observer2.observe(canvas2);
   frames2[0].onload = () => drawFrame2(0);
 
+  // ─── ANIMATION 3 ───
+  const liquidStreams = document.querySelectorAll(".liquid-stream");
+
+  if (liquidStreams.length) {
+    liquidStreams.forEach((path) => {
+      const delay = parseFloat(path.dataset.delay) || 0;
+      const speed = parseFloat(path.dataset.speed) || 1;
+      const pathLength = path.getTotalLength();
+      path.style.strokeDasharray = pathLength;
+      path.style.strokeDashoffset = pathLength;
+
+      ScrollTrigger.create({
+        trigger: "#section-3",
+        start: "top 80%",
+        end: "bottom bottom",
+        scrub: 1,
+        onUpdate: (self) => {
+          const progress = Math.max(0, (self.progress - delay) * speed);
+          path.style.strokeDashoffset =
+            pathLength - pathLength * Math.min(progress, 1);
+        },
+      });
+    });
+  }
   // ─── SCROLL LISTENER ───
   let lastScrollY = window.scrollY;
   let autoScrolling = false;
@@ -306,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
           gsap.to(
             { x: currentX },
             {
-              x: 900,
+              x: 1500,
               duration: 0.9,
               ease: "power2.inOut",
               onUpdate: function () {
@@ -370,7 +394,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ─── PROGRESSBAR ───
-  gsap.registerPlugin(ScrollTrigger);
 
   const STEPS = [
     { id: "section-1", label: "The poet's youth", img: "#" },
@@ -517,5 +540,4 @@ document.addEventListener("DOMContentLoaded", () => {
     particleCanvas.width = window.innerWidth;
     particleCanvas.height = window.innerHeight;
   });
-
 });
