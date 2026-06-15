@@ -99,7 +99,7 @@ video {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 28px 0;
+  padding: 24px 0;
   opacity: 0;
   transform: translateY(-24px);
   pointer-events: none;
@@ -120,11 +120,13 @@ video {
   transition:
     color 0.3s ease,
     transform 0.3s ease;
+    
 }
 
 #header-title:hover {
   color: var(--white);
   transform: scale(1.05);
+
 }
 
 .buttons-layout {
