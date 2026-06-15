@@ -38,7 +38,32 @@ body {
   color: var(--dark-green);
   scrollbar-width: 0px;
   -ms-overflow-style: none;
+}
 
+.cursor {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
 }
 
 .about-hero {
@@ -127,20 +152,21 @@ body {
   gap: 46px;
 }
 .projects-1 p, .projects-2 p {
- color: #D7F2CC;
+ color: var(--light-green);
 font-family: "Instrument Sans";
 font-size: 24px;
-font-weight: 400;
-line-height: normal;
+font-weight: 200;
+line-height: 200%;
+
 }
 .projects-1 img{
-  max-width: 25%;
+  max-width: 35vw;
   
   height: auto;
   object-fit: cover;
 }
 .projects-2 video {
-  max-width: 40vw;
+  max-width: 45vw;
   height: auto;
   object-fit: cover; 
 }
