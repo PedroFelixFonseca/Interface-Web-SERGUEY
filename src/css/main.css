@@ -560,6 +560,7 @@ main {
 
 #section-2 {
   height: 200vh; /* assez long pour scroller tranquillement */
+  position: relative;
 }
 
 #section-2 .lottie-wrapper {
@@ -658,4 +659,28 @@ html::-webkit-scrollbar {
   height: 100%;
   pointer-events: none;
   z-index: 1;
+}
+
+#section-2 {
+  height: 200vh;
+  position: relative;
+}
+
+#section-2 canvas {
+  position: relative;
+  z-index: 40; /* ← au dessus du texte */
+}
+
+#section-2 h1 {
+  color: white;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(2rem, 5vw, 5rem);
 }

@@ -137,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─── ANIMATION 1 ───
+  // ─── ANIMATION 1 ───
   const totalFrames1 = 105;
   let currentFrame1 = 0;
   let phase = 0;
@@ -144,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let canvasVisible1 = false;
   let enteredFromTop = false;
   let currentX = 0;
+  let startX = 0;
+  let endX = 0;
 
   const frames1 = Array.from({ length: totalFrames1 }, (_, i) => {
     const img = new Image();
@@ -155,7 +158,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const ctx1 = canvas1.getContext("2d");
   canvas1.width = window.innerWidth;
   canvas1.height = window.innerHeight;
-  currentX = 500;
+
+  function computePositions() {
+    const scale = 1.5;
+    const img = frames1[0];
+    if (!img || !img.complete) return;
+    const ratio = img.naturalHeight / img.naturalWidth;
+    const w = canvas1.width;
+    const h = w * ratio;
+    let finalW = w;
+    let finalH = h;
+    if (h > canvas1.height) {
+      finalH = canvas1.height;
+      finalW = finalH / ratio;
+    }
+    finalW *= scale;
+    startX = (canvas1.width - finalW) / 2; // ← centré
+    endX = canvas1.width * 0.6; // ← vers la droite, ajuste
+    currentX = startX;
+  }
 
   function drawFrame1(index) {
     const img = frames1[index];
@@ -205,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
-          currentX = 200;
+          currentX = startX;
           hideText(bookText1);
           hideText(bookText2);
           drawFrame1(0);
@@ -215,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
           phase = 0;
           currentFrame1 = 0;
           isPlaying1 = false;
-          currentX = 200;
+          currentX = startX;
           unblockScroll();
           hideText(bookText1);
           hideText(bookText2);
@@ -228,8 +249,10 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   observer1.observe(canvas1);
-  frames1[0].onload = () => drawFrame1(0);
-
+  frames1[0].onload = () => {
+    computePositions(); // ← calcule startX et endX une fois l'image chargée
+    drawFrame1(0);
+  };
   // ─── ANIMATION 2 ───
   const totalFrames2 = 119;
   let currentFrame2 = 0;
@@ -264,21 +287,35 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx2.drawImage(img, x, y, finalW, finalH);
   }
 
+  const section2Title = document.querySelector("#section-2 h1");
+
   const observer2 = new IntersectionObserver(
     (entries) => {
       const entry = entries[0];
-      if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-        currentFrame2 = 0;
-        drawFrame2(0);
+      if (entry.isIntersecting) {
+        gsap.to(section2Title, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+        });
+      } else {
+        gsap.to(section2Title, { opacity: 0, duration: 0.5 });
+        if (entry.boundingClientRect.top > 0) {
+          currentFrame2 = 0;
+          drawFrame2(0);
+        }
       }
       canvasVisible2 = entry.isIntersecting;
     },
-    { threshold: 0.1 },
+    {
+      threshold: 0.5,
+      rootMargin: "-20% 0px -20% 0px",
+    },
   );
 
   observer2.observe(canvas2);
   frames2[0].onload = () => drawFrame2(0);
-
   // ─── ANIMATION 3 ───
   const liquidStreams = document.querySelectorAll(".liquid-stream");
 
@@ -330,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
           gsap.to(
             { x: currentX },
             {
-              x: 1500,
+              x: endX,
               duration: 0.9,
               ease: "power2.inOut",
               onUpdate: function () {
@@ -386,9 +423,24 @@ document.addEventListener("DOMContentLoaded", () => {
       if (scrollingDown && currentFrame2 < totalFrames2 - 1) {
         currentFrame2++;
         drawFrame2(currentFrame2);
+
+        // disparition progressive entre frame 10 et 50
+        if (currentFrame2 >= 10 && currentFrame2 <= 100) {
+          const progress = (currentFrame2 - 10) / 70;
+          gsap.set(section2Title, { opacity: 1 - progress });
+        }
       } else if (!scrollingDown && currentFrame2 > 0) {
         currentFrame2--;
         drawFrame2(currentFrame2);
+
+        // réapparition progressive si on revient en arrière
+        if (currentFrame2 >= 10 && currentFrame2 <= 100) {
+          const progress = (currentFrame2 - 10) / 70;
+          gsap.set(section2Title, { opacity: 1 - progress });
+        }
+        if (currentFrame2 < 10) {
+          gsap.set(section2Title, { opacity: 1 });
+        }
       }
     }
   });
@@ -422,14 +474,13 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <span class="pb-label">${step.label}</span>
     `;
-
     el.addEventListener("click", () => {
       const target = document.getElementById(step.id);
       if (target) {
         phase = 0;
         currentFrame1 = 0;
         isPlaying1 = false;
-        currentX = 200;
+        currentX = startX; // ← était (canvas1.width - finalW) / 2
         hideText(bookText1);
         hideText(bookText2);
         unblockScroll();
@@ -443,7 +494,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
       }
     });
-
     stepsContainer.appendChild(el);
   });
 
