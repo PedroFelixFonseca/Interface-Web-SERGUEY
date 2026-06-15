@@ -90,7 +90,9 @@ video {
   text-transform: uppercase;
   color: var(--light-green);
   cursor: pointer;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
 #header-title:hover {
@@ -622,25 +624,6 @@ main {
   display: none;
 }
 
-.book-text {
-  position: fixed;
-  top: 50%;
-  right: calc(50% - 50px); /* ← décalage de 250px à gauche */
-  transform: translateY(-50%); /* ← plus de translateX */
-  z-index: 500;
-  color: white;
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(1.2rem, 2.5vw, 2rem);
-  text-align: left;
-  max-width: 500px;
-  opacity: 0;
-  pointer-events: none;
-  text-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-}
-
-#book-text-2 {
-  top: 50%; /* ← ajuste selon ce que tu veux */
-}
 #particles {
   position: fixed;
   inset: 0;
@@ -727,7 +710,42 @@ html::-webkit-scrollbar {
   font-weight: 400;
   margin: 10px 0;
 }
+.book-text {
+  position: fixed;
+  top: 50%;
+  right: calc(50% - 50px); /* ← décalage de 250px à gauche */
+  transform: translateY(-50%); /* ← plus de translateX */
+  z-index: 500;
+  color: white;
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  text-align: left;
+  max-width: 500px;
+  opacity: 0;
+  pointer-events: none;
+  text-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
 
+.book-text p {
+  color: white;
+  font-family: "Instrument Serif", serif;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.book-text span {
+  color: var(--light-green);
+  letter-spacing: 0.3em;
+}
+.book-text h2 {
+  color: var(--light-green);
+  font-family: "Instrument Serif", serif;
+  font-size: 4rem;
+  font-weight: 400;
+  margin: 10px 0;
+}
+#book-text-2 {
+  top: 50%; /* ← ajuste selon ce que tu veux */
+}
 .S2 {
   display: flex;
   flex-direction: column;
@@ -744,13 +762,13 @@ html::-webkit-scrollbar {
 }
 .left {
   margin-right: auto;
-  margin-left: 15%;
+  margin-left: 10%;
 }
 
 .right {
   margin-left: auto;
-  text-align: right;
-  margin-right: 10%;
+  text-align: left;
+  margin-right: 7%;
 }
 
 .S2 span {
@@ -766,11 +784,11 @@ html::-webkit-scrollbar {
   margin: 10px 0;
 }
 
-.s2-articles {
+.S2-articles {
   display: flex;
   flex-direction: column;
-  gap: 8vh;
-  padding: 8vh 10%;
+  gap: 15vh; /* ← plus d'espace entre les articles */
+  padding: 20vh 10%; /* ← plus de marge en haut et en bas */
   background: #000;
 }
 #section-4 {
@@ -829,6 +847,7 @@ html::-webkit-scrollbar {
 .chapter p {
   font-size: 1rem;
   line-height: 1.7;
+  font-family: "Instrument Serif", serif;
 }
 
 .chapter-1 {
@@ -843,7 +862,7 @@ html::-webkit-scrollbar {
 
 .chapter-3 {
   left: 10%;
-  top: 45%;
+  top: 57%;
 }
 
 .chapter-4 {
@@ -855,3 +874,26 @@ html::-webkit-scrollbar {
   left: 10%;
   top: 82%;
 }
+
+/* #section-4 {
+  font-family: "Instrument Serif", serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40vh;
+}
+#section-4 h2 {
+  color: var(--light-green);
+  font-size: 4rem;
+  font-weight: 400;
+  margin: 10px 0;
+  align-items: center;
+}
+
+#section-4 p {
+  color: var(--white);
+  font-size: 1.2rem;
+  line-height: 1.7;
+  max-width: 600px;
+} */

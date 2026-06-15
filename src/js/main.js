@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (clicked) return;
     clicked = true;
     gsap.killTweensOf("#cta");
-    
 
     const wrap = document.getElementById("pomegranate-wrap");
     const rect = wrap.getBoundingClientRect();
@@ -104,25 +103,25 @@ document.addEventListener("DOMContentLoaded", () => {
       onComplete: () => {
         unblockScroll();
         document.getElementById("scene").style.display = "none";
-         // ─── Apparition du header ───
-    const header = document.getElementById("site-header");
-    header.classList.add("is-visible");
-    gsap.to(header, {
-      opacity: 1,
-      y: 0,
-      duration: 1.2,
-      ease: "power3.out",
+        // ─── Apparition du header ───
+        const header = document.getElementById("site-header");
+        header.classList.add("is-visible");
+        gsap.to(header, {
+          opacity: 1,
+          y: 0,
+          duration: 1.2,
+          ease: "power3.out",
+        });
+      },
     });
-  },
-});
   });
   // ─── HEADER : RELANCER L'EXPÉRIENCE ───
-const headerTitle = document.getElementById("header-title");
-if (headerTitle) {
-  headerTitle.addEventListener("click", () => {
-    location.reload();
-  });
-}
+  const headerTitle = document.getElementById("header-title");
+  if (headerTitle) {
+    headerTitle.addEventListener("click", () => {
+      location.reload();
+    });
+  }
 
   // ─── TEXTE ───
   const bookText1 = document.getElementById("book-text-1");
@@ -137,7 +136,8 @@ if (headerTitle) {
         opacity: 1,
         y: 0,
         filter: "blur(0px)",
-        duration: 1.2,
+        duration: 2.5,
+        delay: 1.5, // ← attend 1.5s avant d'apparaître
         ease: "power2.out",
       },
     );
@@ -149,7 +149,7 @@ if (headerTitle) {
       opacity: 0,
       y: -20,
       filter: "blur(8px)",
-      duration: 0.8,
+      duration: 1.5, // ← était 0.8
       ease: "power2.in",
     });
   }
@@ -435,11 +435,10 @@ if (headerTitle) {
         gsap.to(article, {
           opacity: 1,
           y: 0,
-          duration: 0.25,
+          duration: 0.8,
           ease: "power2.out",
         }),
-      onLeaveBack: () =>
-        gsap.to(article, { opacity: 0, y: 60, duration: 0.25 }),
+      onLeaveBack: () => gsap.to(article, { opacity: 0, y: 60, duration: 0.8 }),
     });
   });
   // ─────────────────────────────
