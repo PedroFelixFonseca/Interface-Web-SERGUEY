@@ -87,85 +87,90 @@
    
 
     <main id="main-content">
-      <section class="section" id="section-1">
-        <div class="lottie-wrapper" id="wrapper-1">
-          <canvas id="canvas-1"></canvas>
-        </div>
-      </section>
+  <!-- SECTION 1 — reste en place -->
+  <section class="section" id="section-1">
+    <div class="lottie-wrapper" id="wrapper-1">
+      <canvas id="canvas-1"></canvas>
+    </div>
+  </section>
 
-      <section class="section" id="section-2">
-        <div class="lottie-wrapper" id="wrapper-2">
-          <canvas id="canvas-2"></canvas>
+  <!-- SECTION 4 (lace) — prend la place de la 2 -->
+  <section class="section" id="section-4">
+    <div class="lace-story">
+      <div class="sticky-scene">
+        <div class="lace-column">
+          <img id="laceRibbon" src="img/dentelle_blanche_4.png" alt="Lace" />
         </div>
-        <h1 id="s2-title">The Poet at the Monastery</h1>
-      </section>
-      <div class="S2-articles">
-        <article class="S2 left">
+
+        <article class="chapter chapter-1">
           <span>01</span>
-          <h2>His Church Debut</h2>
+          <h2>The First Encounter</h2>
           <p>
-            For several decades, Sayat Nova lived between prayer and creative
-            work. He was ordained a priest, then an archbishop according to some
-            sources.
+            The poet meets his muse and experiences the awakening of love.
+            Through symbolic images and rituals, Parajanov shows the
+            beginning of a powerful emotional and spiritual connection.
           </p>
         </article>
 
-        <article class="S2 right">
+        <article class="chapter chapter-2">
           <span>02</span>
-          <h2>His vision of God</h2>
+          <h2>Awakening of Desire</h2>
           <p>
-           A central theme in his later works is the idea that earthly beauty points toward a higher, divine reality. The language of love, which had once been directed toward human subjects, gradually becomes a language for expressing spiritual longing. In many poems, the separation between human love and divine love becomes deliberately blurred. The beloved can be understood simultaneously as a person, an ideal, or a symbol of God's presence in the world.
+            The bond between the lovers deepens, but obstacles and
+            separation prevent them from being together. The poet
+            experiences desire, absence, and melancholy.
+          </p>
+        </article>
+
+        <article class="chapter chapter-3">
+          <span>03</span>
+          <h2>The Union of Souls</h2>
+          <p>
+            Unable to fully realize his love, the poet turns his feelings
+            into creative inspiration. His personal emotions become poetry,
+            music, and spiritual expression.
           </p>
         </article>
       </div>
-      <section class="section" id="section-3"></section>
-      <section class="section" id="section-4">
-        <div class="lace-story">
-          <div class="sticky-scene">
-            <div class="lace-column">
-              <img
-                id="laceRibbon"
-                src="img/dentelle_blanche_4.png"
-                alt="Lace"
-              />
-            </div>
+    </div>
+  </section>
 
-            <article class="chapter chapter-1">
-              <span>01</span>
-              <h2>The First Encounter</h2>
-              <p>
-                The poet meets his muse and experiences the awakening of love.
-                Through symbolic images and rituals, Parajanov shows the
-                beginning of a powerful emotional and spiritual connection.
-              </p>
-            </article>
+  <!-- SECTION 2 (monastère) — prend la place de la 3 -->
+  <section class="section" id="section-2">
+    <div class="lottie-wrapper" id="wrapper-2">
+      <canvas id="canvas-2"></canvas>
+    </div>
+    <h1 id="s2-title">The Poet at the Monastery</h1>
+  </section>
+  <div class="S2-articles">
+    <article class="S2 left">
+      <span>01</span>
+      <h2>His Church Debut</h2>
+      <p>
+        For several decades, Sayat Nova lived between prayer and creative
+        work. He was ordained a priest, then an archbishop according to some
+        sources.
+      </p>
+    </article>
 
-            <article class="chapter chapter-2">
-              <span>02</span>
-              <h2>Awakening of Desire</h2>
-              <p>
-                The bond between the lovers deepens, but obstacles and
-                separation prevent them from being together. The poet
-                experiences desire, absence, and melancholy.
-              </p>
-            </article>
+    <article class="S2 right">
+      <span>02</span>
+      <h2>His vision of God</h2>
+      <p>
+        A central theme in his later works is the idea that earthly beauty points toward a higher, divine reality. The language of love, which had once been directed toward human subjects, gradually becomes a language for expressing spiritual longing. In many poems, the separation between human love and divine love becomes deliberately blurred. The beloved can be understood simultaneously as a person, an ideal, or a symbol of God's presence in the world.
+      </p>
+    </article>
+  </div>
 
-            <article class="chapter chapter-3">
-              <span>03</span>
-              <h2>The Union of Souls</h2>
-              <p>
-                Unable to fully realize his love, the poet turns his feelings
-                into creative inspiration. His personal emotions become poetry,
-                music, and spiritual expression.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-      <section class="section" id="section-5"> <h2>
-        Work in Progress...
-      </h2>
-    <p>We are working on finishing the story of the great Sayat Nova</p></section>
+  <!-- SECTION 5 (WIP) — devient la 4 -->
+  <section class="section" id="section-5">
+    <h2>Work in Progress...</h2>
+    <p>We are working on finishing the story of the great Sayat Nova</p>
+  </section>
+
+  <!-- SECTION 3 (vide) — passe en dernier -->
+  <section class="section" id="section-3"></section>
+</main>
     </main>
     <include src="./components/footer.html"></include>
     <script src="js/main.js" type="module"></script>
