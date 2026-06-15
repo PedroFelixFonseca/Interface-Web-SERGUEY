@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motionPathPlugin } from "gsap/MotionPathPlugin";
 gsap.registerPlugin(ScrollTrigger);
 
+gsap.set("#site-header", { opacity: 0, y: -24 });
 document.addEventListener("DOMContentLoaded", () => {
   // ─── BLOCK/UNBLOCK SCROLL ───
   let scrollPosition = 0;
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (clicked) return;
     clicked = true;
     gsap.killTweensOf("#cta");
+    
 
     const wrap = document.getElementById("pomegranate-wrap");
     const rect = wrap.getBoundingClientRect();
@@ -102,9 +104,25 @@ document.addEventListener("DOMContentLoaded", () => {
       onComplete: () => {
         unblockScroll();
         document.getElementById("scene").style.display = "none";
-      },
+         // ─── Apparition du header ───
+    const header = document.getElementById("site-header");
+    header.classList.add("is-visible");
+    gsap.to(header, {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      ease: "power3.out",
     });
+  },
+});
   });
+  // ─── HEADER : RELANCER L'EXPÉRIENCE ───
+const headerTitle = document.getElementById("header-title");
+if (headerTitle) {
+  headerTitle.addEventListener("click", () => {
+    location.reload();
+  });
+}
 
   // ─── TEXTE ───
   const bookText1 = document.getElementById("book-text-1");
