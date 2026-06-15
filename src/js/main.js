@@ -137,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ─── ANIMATION 1 ───
-  // ─── ANIMATION 1 ───
   const totalFrames1 = 105;
   let currentFrame1 = 0;
   let phase = 0;
@@ -402,6 +401,120 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+// ─────────────────────────────
+// SECTION 4 — LACE STORY
+// ─────────────────────────────
+
+const laceRibbon = document.getElementById("laceRibbon");
+
+if (laceRibbon) {
+
+  gsap.set(".chapter", {
+    opacity: 0,
+    y: 60
+  });
+
+  const laceTl = gsap.timeline({
+
+    scrollTrigger: {
+      trigger: "#section-4",
+      start: "top top",
+      end: "+=4500",
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1
+    }
+  });
+
+  laceTl.fromTo(
+    "#laceRibbon",
+
+    {
+      clipPath: "inset(100% 0 0 0)"
+    },
+
+    {
+      clipPath: "inset(0% 0 0 0)",
+      duration: 1
+    },
+
+    0
+  );
+
+  laceTl.to(
+    "#laceRibbon",
+
+    {
+      y: -180,
+      duration: 1
+    },
+
+    0
+  );
+
+  laceTl.to(
+    ".chapter-1",
+    {
+      opacity: 1,
+      y: 0,
+      duration: .25
+    },
+    0.10
+  );
+
+  laceTl.to(
+    ".chapter-2",
+    {
+      opacity: 1,
+      y: 0,
+      duration: .25
+    },
+    0.30
+  );
+
+  laceTl.to(
+    ".chapter-3",
+    {
+      opacity: 1,
+      y: 0,
+      duration: .25
+    },
+    0.50
+  );
+
+  laceTl.to(
+    ".chapter-4",
+    {
+      opacity: 1,
+      y: 0,
+      duration: .25
+    },
+    0.70
+  );
+
+  laceTl.to(
+    ".chapter-5",
+    {
+      opacity: 1,
+      y: 0,
+      duration: .25
+    },
+    0.90
+  );
+
+  // léger flottement permanent
+
+  gsap.to("#laceRibbon", {
+    rotation: 1,
+    duration: 4,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+    transformOrigin: "center center"
+  });
+}
+
+
   // ─── SCROLL LISTENER ───
   let s2TitleVisible = false;
   let lastScrollY = window.scrollY;
